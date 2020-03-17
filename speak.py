@@ -24,7 +24,7 @@ class Voice():
         os.system("mplayer voice-google.mp3")
     @staticmethod
     def speak_ibm(*words):
-        authenticator = IAMAuthenticator('RMIQ1HwIDakLulaTrMsWbfJeu87gT4l5_7xUVHnsTCv_')
+        authenticator = IAMAuthenticator('api_key')
         service = TextToSpeechV1(authenticator=authenticator)
         service.set_service_url('https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/0dc8fc0f-71b4-4636-b389-a92cd2fd182e')
 
@@ -110,3 +110,10 @@ class Voice():
             os.system('cd ~/mimic1/ && ./mimic -t "'+ words[0] +'" ')
         if len(words) == 2:
             os.system('cd ~/mimic1/ && ./mimic -t "'+ words[0] +', '+ words[1] +'"')
+    @staticmethod
+    def speak_flite(*words):
+        if len(words) == 1:
+            os.system('cd ~/flite/ && ./bin/flite -t "'+ words[0] +'"-voice mycroft_voice_4.0.flitevox ')
+        if len(words) == 2:
+            os.system('cd ~/flite/ && ./bin/flite -t "'+ words[0] +', '+ words[1] +'"-voice mycroft_voice_4.0.flitevox')
+           
