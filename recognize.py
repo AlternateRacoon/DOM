@@ -1,0 +1,75 @@
+import speech_recognition as sr
+from ibm_watson import SpeechToTextV1
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+
+
+class Recognize():
+    @staticmethod
+    def get_recognize_ibm():
+        r = sr.Recognizer()
+        speech = sr.Microphone()
+        authenticator = IAMAuthenticator('6w6sJ_t12M9VfKaXsCRWkpQlILb70e8mDVAciW6b_LQ8')
+        speech_to_text = SpeechToTextV1(
+            authenticator=authenticator
+        )
+        with speech as source:
+            print("Listening....")
+            audio_file = r.listen(source)
+        print("recognizing")
+        speech_recognition_results = speech_to_text.recognize(audio=audio_file.get_wav_data(), content_type='audio/wav').get_result()
+        if speech_recognition_results["results"]:
+            recog = speech_recognition_results["results"][0]["alternatives"][0]["transcript"]
+            recog = recog.replace("don't","dom")
+            recog = recog.replace("dome","dom")
+            recog = recog.replace("your view","YouTube")
+            recog = recog.replace("please", "play")
+        else:
+            recog = False
+        return recog
+    @staticmethod
+    def get_recognize_google():
+        r = sr.Recognizer()
+        speech = sr.Microphone(device_index=0)
+        # for recognizing speech
+        with speech as source:
+            print("Listening…")
+            audio = r.adjust_for_ambient_noise(source)
+            audio = r.listen(source)
+        print("recognizing")
+        recog = r.recognize_google(audio, language='en-US')
+        recog = recog.replace("don't", "dom")
+        recog = recog.replace("dome", "dom")
+        recog = recog.replace("your view", "YouTube")
+        return recog
+    @staticmethod
+    def get_recognize_sphinx():
+        r = sr.Recognizer()
+        speech = sr.Microphone(device_index=0)
+        # for speech recognition
+        with speech as source:
+            print("Listening…")
+            audio = r.adjust_for_ambient_noise(source)
+            audio = r.listen(source)
+        print("recognizing")
+        recog = r.recognize_sphinx(audio)
+        recog = recog.replace("don't", "dom")
+        recog = recog.replace("dome", "dom")
+        recog = recog.replace("your view", "YouTube")
+        return recog
+    @staticmethod
+    def get_recognize_all():
+        r = sr.Recognizer()
+        speech = sr.Microphone()
+        with speech as source:
+            print("Listening…")
+            audio = r.adjust_for_ambient_noise(source)
+            audio = r.listen(source)
+        authenticator = IAMAuthenticator('6w6sJ_t12M9VfKaXsCRWkpQlILb70e8mDVAciW6b_LQ8')
+        speech_to_text = SpeechToTextV1(
+            authenticator=authenticator
+        )
+        print("recognizing")
+        recog_sphinx = r.recognize_sphinx(audio)
+        recog_google = r.recognize_google(audio)
+        recog_ibm = speech_to_text.recognize(audio=audio.get_wav_data(), content_type='audio/wav').get_result()["results"][0]["alternatives"][0]["transcript"]
+        return recog_google,recog_ibm,recog_sphinx
