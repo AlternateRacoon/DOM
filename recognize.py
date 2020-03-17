@@ -36,6 +36,11 @@ class Recognize():
             audio = r.adjust_for_ambient_noise(source)
             audio = r.listen(source)
         print("recognizing")
+        response = {
+        "success": True,
+        "error": None,
+        "transcription": None
+        }
         try:
             response["transcription"] = r.recognize_google(audio)
         except sr.RequestError:
