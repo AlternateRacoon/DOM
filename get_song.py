@@ -5,6 +5,7 @@ import urllib.request
 from time import sleep
 from recognize import Recognize
 import pafy
+import os
 
 
 def play_song(song_name):
@@ -20,9 +21,10 @@ def play_song(song_name):
     while True:
         command = Recognize.get_recognize_google()
         print(command)
-        if not command:
+        if command == False:
+            pass
+        else:
             if "pause" in command or "stop" in command or "exit" in command or "quit" in command:
-                p.stdin.write(b'\nquit\n')
                 os.system("pkill mplayer")
                 break
 
