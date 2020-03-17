@@ -4,6 +4,7 @@ it is an assistant which uses mimic/flite as its voice
 and recognizes using ibm's watson speech-to-text/vosk 
 # INSTALLING
 You need to install
+- SpeechRecognition
 - Pyaudio
 - Flite/Mimic
 - Ibm_watson
