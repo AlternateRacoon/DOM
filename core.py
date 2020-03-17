@@ -6,7 +6,7 @@ from get_song import play_song
 
 
 while True:
-    response = Recognize.get_recognize_ibm()
+    response = Recognize.get_recognize_google()
     print(response)
     if response == False:
         pass
