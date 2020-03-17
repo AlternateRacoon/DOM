@@ -37,7 +37,7 @@ class Recognize():
             audio = r.listen(source)
         print("recognizing")
         try:
-            response["transcription"] = recognizer.recognize_google(audio)
+            response["transcription"] = r.recognize_google(audio)
         except sr.RequestError:
             # API was unreachable or unresponsive
             response["success"] = False
