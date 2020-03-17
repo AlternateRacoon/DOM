@@ -29,7 +29,7 @@ audio_source = AudioSource(q, True, True)
 ###############################################
 #### Prepare Speech to Text Service ########
 ###############################################
-Voice.speak_mimic("Connected to media center", "please speak your commands")
+Voice.speak_flite("Connected to media center", "please speak your commands")
 # initialize speech to text service
 authenticator = IAMAuthenticator('6w6sJ_t12M9VfKaXsCRWkpQlILb70e8mDVAciW6b_LQ8')
 speech_to_text = SpeechToTextV1(authenticator=authenticator)
@@ -47,7 +47,7 @@ class MyRecognizeCallback(RecognizeCallback):
         if response == False:
             pass
         elif "break" in response or "back" in response or "continue" in response:
-            Voice.speak_mimic("going back to normal mode")
+            Voice.speak_flite("going back to normal mode")
             os.system("python3 core_ibm.py")
         else:
             media_center_control("media center " + response)
