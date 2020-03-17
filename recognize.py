@@ -36,7 +36,17 @@ class Recognize():
             audio = r.adjust_for_ambient_noise(source)
             audio = r.listen(source)
         print("recognizing")
-        recog = r.recognize_google(audio, language='en-US')
+        try:
+            response["transcription"] = recognizer.recognize_google(audio)
+        except sr.RequestError:
+            # API was unreachable or unresponsive
+            response["success"] = False
+            response["error"] = "API unavailable"
+        except sr.UnknownValueError:
+            # speech was unintelligible
+            response["error"] = "Unable to recognize speech"
+        return response
+        recog = response
         recog = recog.replace("don't", "dom")
         recog = recog.replace("dome", "dom")
         recog = recog.replace("your view", "YouTube")
