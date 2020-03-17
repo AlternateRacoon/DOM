@@ -14,12 +14,15 @@ def play_song(song_name):
     url = "https://www.youtube.com/watch?v=" + search_results[0]
     video = pafy.new(url)
     best = video.getbest()
-    cmd = ['mplayer', '-slave', '-quiet', best.url]
+    cmd = ['mplayer','-novideo','-ao','oss','-slave', '-quiet', best.url]
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
     sleep(5)
-    command = Recognize.get_recognize_google()
-    print(command)
+    while True:
+        command = Recognize.get_recognize_google()
+        print(command)
+        if "pause" in command or "stop" in command or "exit" in command or "quit" in command:
+            break
     if "pause" in command or "stop" in command or "exit" in command or "quit" in command:
         p.stdin.write(b'\nquit\n')
-
-
+    sleep(video.length)
+    
