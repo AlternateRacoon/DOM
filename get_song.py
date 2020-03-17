@@ -17,7 +17,7 @@ def play_song(song_name):
     cmd = ['mplayer', '-slave', '-quiet', best.url]
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
     sleep(5)
-    command = Recognize.get_recognize_ibm()
+    command = Recognize.get_recognize_google()
     print(command)
     if "pause" in command or "stop" in command or "exit" in command or "quit" in command:
         p.stdin.write(b'\nquit\n')
