@@ -7,7 +7,7 @@ from speak import Voice
 def call_dom():
     Voice.speak_flite("dom is now going to sleep", "call again by saying dom")
     while True:
-        response = Recognize.get_recognize_ibm()
+        response = Recognize.get_recognize_google()
         print(response)
         if response == False:
             pass
@@ -18,7 +18,7 @@ def call_dom():
 def connect_media_center():
     Voice.speak_flite("Connected to media center", "please speak your commands")
     while True:
-        response = Recognize.get_recognize_ibm()
+        response = Recognize.get_recognize_google()
         print(response)
         if response == False:
             pass
