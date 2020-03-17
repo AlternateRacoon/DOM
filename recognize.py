@@ -8,7 +8,7 @@ class Recognize():
     def get_recognize_ibm():
         r = sr.Recognizer()
         speech = sr.Microphone()
-        authenticator = IAMAuthenticator('6w6sJ_t12M9VfKaXsCRWkpQlILb70e8mDVAciW6b_LQ8')
+        authenticator = IAMAuthenticator('api_key')
         speech_to_text = SpeechToTextV1(
             authenticator=authenticator
         )
@@ -64,7 +64,7 @@ class Recognize():
             print("Listening…")
             audio = r.adjust_for_ambient_noise(source)
             audio = r.listen(source)
-        authenticator = IAMAuthenticator('6w6sJ_t12M9VfKaXsCRWkpQlILb70e8mDVAciW6b_LQ8')
+        authenticator = IAMAuthenticator('api_key')
         speech_to_text = SpeechToTextV1(
             authenticator=authenticator
         )
