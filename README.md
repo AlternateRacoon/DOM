@@ -12,8 +12,7 @@ You need to install
 - pafy
 - python3
 
-git clone https://github.com/AlternateRacoon/DOM.git
-cd DOM
+git clone https://github.com/AlternateRacoon/DOM.git && cd DOM
 
 # USAGE
 python3 core.py 
