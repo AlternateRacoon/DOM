@@ -45,12 +45,14 @@ class Recognize():
         except sr.UnknownValueError:
             # speech was unintelligible
             response["error"] = "Unable to recognize speech"
-        return response
-        recog = response
-        recog = recog.replace("don't", "dom")
-        recog = recog.replace("dome", "dom")
-        recog = recog.replace("your view", "YouTube")
-        return recog
+        recog = response["transcription"]
+        if recog:
+            recog = recog.replace("don't", "dom")
+            recog = recog.replace("dome", "dom")
+            recog = recog.replace("your view", "YouTube")
+            return recog
+        else:
+            return False
     @staticmethod
     def get_recognize_sphinx():
         r = sr.Recognizer()
