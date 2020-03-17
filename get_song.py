@@ -25,8 +25,5 @@ def play_song(song_name):
                 p.stdin.write(b'\nquit\n')
                 os.system("pkill mplayer")
                 break
-    if "pause" in command or "stop" in command or "exit" in command or "quit" in command:
-        p.stdin.write(b'\nquit\n')
-        os.system("pkill mplayer")
 
     
