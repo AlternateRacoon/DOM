@@ -112,9 +112,19 @@ class Voice():
             os.system('cd ~/mimic1/ && ./mimic -t "'+ words[0] +', '+ words[1] +'"')
     @staticmethod
     def speak_flite(*words):
+        text = "The personal pronoun you is the second-person personal pronoun, both singular and plural, and both nominative and oblique case in Modern English. The oblique (objective) form, you, functioned previously in the roles of both accusative and dative, as well as all instances following a preposition."
         if len(words) == 1:
-            os.system('cd ~/flite/ && ./bin/flite -t "'+ words[0] +'"-voice voices/mycroft_voice_4.0.flitevox ')
-            print(words[0])
+            if text in words[0]:
+                pass
+            else:
+                os.system('cd ~/flite/ && ./bin/flite -t "'+ words[0] +'"-voice voices/mycroft_voice_4.0.flitevox ')
+                print(words[0])
         if len(words) == 2:
-            os.system('cd ~/flite/ && ./bin/flite -t "'+ words[0] +', '+ words[1] +'"-voice voices/mycroft_voice_4.0.flitevox')
-            print(words[0], words[1])
+            if text in words[0]:
+                if text in words[1]:
+                    pass
+            if text in words[1]:
+                pass
+            else:
+                os.system('cd ~/flite/ && ./bin/flite -t "'+ words[0] +', '+ words[1] +'"-voice voices/mycroft_voice_4.0.flitevox')
+                print(words[0], words[1])
