@@ -113,7 +113,8 @@ class Voice():
     @staticmethod
     def speak_flite(*words):
         if len(words) == 1:
-            os.system('cd ~/flite/ && ./bin/flite -t "'+ words[0] +'"-voice mycroft_voice_4.0.flitevox ')
+            os.system('cd ~/flite/ && ./bin/flite -t "'+ words[0] +'"-voice voices/mycroft_voice_4.0.flitevox ')
+            print(words[0])
         if len(words) == 2:
-            os.system('cd ~/flite/ && ./bin/flite -t "'+ words[0] +', '+ words[1] +'"-voice mycroft_voice_4.0.flitevox')
-           
+            os.system('cd ~/flite/ && ./bin/flite -t "'+ words[0] +', '+ words[1] +'"-voice voices/mycroft_voice_4.0.flitevox')
+            print(words[0], words[1])
