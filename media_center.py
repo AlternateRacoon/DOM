@@ -11,7 +11,7 @@ def call_dom():
         print(response)
         if response == False:
             pass
-        elif "dom" in response.lower():
+        elif "dom" in response.lower() or "start" in response.lower():
             Voice.speak_flite("Listening...")
             break
 
