@@ -9,4 +9,4 @@ def search_wikipedia(search):
         except wikipedia.DisambiguationError as e:
             s = random.choice(e.options)
             info = wikipedia.page(s)
-        Voice.speak_flite()
+        Voice.speak_flite(info)
