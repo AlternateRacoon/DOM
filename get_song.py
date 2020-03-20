@@ -54,9 +54,11 @@ def play_song(song_name):
                 os.system("pkill mplayer")
                 break
             elif "download to server" in command or "save to server" in command or "download" in command:
+                os.system("pkill mplayer")
                 os.system("sudo mount -t cifs -o user=root,pass=dietpi //192.168.1.111/dietpi /Dietpi")
                 Voice.speak_flite("Saving The File")
                 os.system("cd /Dietpi && wget '"+ mp3_link + "'")
+                break
 
 
 
