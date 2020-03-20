@@ -13,4 +13,5 @@ def search_wikipedia(search):
             info = wikipedia.summary(s, sentences=2)
         except wikipedia.PageError as e:
             Voic.speak_flite("Could not find any results")
-        Voice.speak_flite(info)
+        if info:
+            Voice.speak_flite(info)
