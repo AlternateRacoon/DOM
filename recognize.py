@@ -55,6 +55,7 @@ class Recognize():
             recog = recog.replace("don't", "dom")
             recog = recog.replace("dome", "dom")
             recog = recog.replace("your view", "YouTube")
+            recog = recog.replace("ks","ksi")
             return recog
         else:
             return False
