@@ -34,14 +34,14 @@ def play_song(song_name):
         urllib.request.Request("https://songspk.mobi/search?q="+ song_name,
                                headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
         "utf8")
-    link = "https://songspk.mobi"+ re.findall('<a href="(.*?)"', html_data)[23]
-    html_data = urllib.request.urlopen(
-        urllib.request.Request(link,
-                               headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
-        "utf8")
     if "<h4>Your search did not yield any results.</h4>" in html_data:
         Voice.speak_flite("I am afraid, i cannot find any songs of that name")
     else:
+        link = "https://songspk.mobi"+ re.findall('<a href="(.*?)"', html_data)[23]
+        html_data = urllib.request.urlopen(
+            urllib.request.Request(link,
+                                   headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
+            "utf8")
         mp3_link = re.findall('<a href="(.*?)" download="" class="btn btn-block btn-default">', html_data)[0]
 
         cmd = ['mplayer','-novideo', '-ao', 'oss', mp3_link]
