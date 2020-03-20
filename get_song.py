@@ -46,13 +46,16 @@ def play_song(song_name):
     while True:
         command = Recognize.get_recognize_google()
         print(command)
-        if "pause" in command or "stop" in command or "exit" in command or "quit" in command or "top" in command:
-            os.system("pkill mplayer")
-            break
-        elif "download to server" in command or "save to server" in command or "download" in command:
-            os.system("sudo mount -t cifs -o user=root,pass=dietpi //192.168.1.111/dietpi /Dietpi")
-            Voice.speak_flite("Saving The File")
-            os.system("cd /Dietpi && wget "+ mp3_link)
+        if command == False:
+            pass
+        else:
+            if "pause" in command or "stop" in command or "exit" in command or "quit" in command or "top" in command:
+                os.system("pkill mplayer")
+                break
+            elif "download to server" in command or "save to server" in command or "download" in command:
+                os.system("sudo mount -t cifs -o user=root,pass=dietpi //192.168.1.111/dietpi /Dietpi")
+                Voice.speak_flite("Saving The File")
+                os.system("cd /Dietpi && wget "+ mp3_link)
 
 
 
