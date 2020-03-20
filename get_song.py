@@ -9,7 +9,7 @@ import os
 from speak import Voice
 
 
-def play_song(song_name):
+def play_video(video_name):
     query_string = urllib.parse.urlencode({"search_query": song_name})
     html_content = urllib.request.urlopen("http://www.youtube.com/results?" + query_string)
     search_results = re.findall(r'href=\"\/watch\?v=(.{11})', html_content.read().decode())
@@ -40,6 +40,7 @@ def play_song(song_name):
                                headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
         "utf8")
     mp3_link = re.findall('<a href="(.*?)" download="" class="btn btn-block btn-default">', html_data)[0]
+    
     cmd = ['mplayer', '-ao', 'oss', '-slave', '-quiet', mp3_link]
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
     sleep(5)
@@ -55,7 +56,7 @@ def play_song(song_name):
             elif "download to server" in command or "save to server" in command or "download" in command:
                 os.system("sudo mount -t cifs -o user=root,pass=dietpi //192.168.1.111/dietpi /Dietpi")
                 Voice.speak_flite("Saving The File")
-                os.system("cd /Dietpi && wget "+ mp3_link)
+                os.system("cd /Dietpi && wget '"+ mp3_link + "'")
 
 
 
