@@ -4,4 +4,9 @@ def search_wikipedia(search):
     if "who is" in search or "who was" in search or "who are" in search or "what is" in search:
         search = search.split()[2:]
         search = " ".join(search)
-        Voice.speak_flite(wikipedia.summary(search, sentences=2))
+        try:
+            info = wikipedia.summary(search, sentences=2)
+        except wikipedia.DisambiguationError as e:
+            s = random.choice(e.options)
+            info = wikipedia.page(s)
+        Voice.speak_flite()
