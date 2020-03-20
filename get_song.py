@@ -6,6 +6,7 @@ from time import sleep
 from recognize import Recognize
 import pafy
 import os
+from speak import Voice
 
 
 def play_song(song_name):
@@ -27,6 +28,31 @@ def play_song(song_name):
             if "pause" in command or "stop" in command or "exit" in command or "quit" in command:
                 os.system("pkill mplayer")
                 break
+def play_song(song_name):
+    song_name = song_name.replace(" ", "+")
+    html_data = urllib.request.urlopen(
+        urllib.request.Request("https://songspk.mobi/search?q="+ song_name,
+                               headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
+        "utf8")
+    link = "https://songspk.mobi"+ re.findall('<a href="(.*?)"', html_data)[23]
+    html_data = urllib.request.urlopen(
+        urllib.request.Request(link,
+                               headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
+        "utf8")
+    mp3_link = re.findall('<a href="(.*?)" download="" class="btn btn-block btn-default">', html_data)[0]
+    cmd = ['mplayer', '-ao', 'oss', '-slave', '-quiet', mp3_link]
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+    sleep(5)
+    while True:
+        command = Recognize.get_recognize_google()
+        print(command)
+        if "pause" in command or "stop" in command or "exit" in command or "quit" in command or "top" in command:
+            os.system("pkill mplayer")
+            break
+        elif "download to server" in command or "save to server" in command or "download" in command:
+            os.system("sudo mount -t cifs -o user=root,pass=dietpi //192.168.1.111/dietpi /Dietpi")
+            Voice.speak_flite("Saving The File")
+            os.system("cd /Dietpi && wget "+ mp3_link)
 
 
 
