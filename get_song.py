@@ -16,18 +16,32 @@ def play_video(video_name):
     url = "https://www.youtube.com/watch?v=" + search_results[0]
     video = pafy.new(url)
     best = video.getbest()
-    cmd = ['mplayer','-novideo','-ao','oss', best.url]
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
-    sleep(5)
-    while True:
-        command = Recognize.get_recognize_google()
-        print(command)
-        if command == False:
-            pass
-        else:
-            if "pause" in command or "stop" in command or "exit" in command or "quit" in command:
-                os.system("pkill mplayer")
-                break
+    if ".m3u8" in best.url:
+        cmd = ['mpv','--no-video','-ao','oss', best.url]
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+        sleep(5)
+        while True:
+            command = Recognize.get_recognize_google()
+            print(command)
+            if command == False:
+                pass
+            else:
+                if "pause" in command or "stop" in command or "exit" in command or "quit" in command:
+                    os.system("pkill mpv")
+                    break
+    else:
+        cmd = ['mplayer','-novideo','-ao','oss', best.url]
+        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
+        sleep(5)
+        while True:
+            command = Recognize.get_recognize_google()
+            print(command)
+            if command == False:
+                pass
+            else:
+                if "pause" in command or "stop" in command or "exit" in command or "quit" in command:
+                    os.system("pkill mplayer")
+                    break
 def play_song(song_name):
     song_name = song_name.replace(" ", "+")
     html_data = urllib.request.urlopen(
