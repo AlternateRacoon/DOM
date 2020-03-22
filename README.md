@@ -12,6 +12,7 @@ You need to install
 - mplayer
 - pafy
 - python3
+
 `
 git clone https://github.com/AlternateRacoon/DOM.git && cd DOM
 `
