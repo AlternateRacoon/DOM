@@ -32,5 +32,6 @@ while True:
                 news_number += 1
                 Voice.speak_flite(read_news_headlines(news_number))
         else:
-            greet_user(response)
-            search_wikipedia(response)
+            check = greet_user(response)
+            if not check:
+                search_wikipedia(response)
