@@ -4,6 +4,7 @@ from greetings import greet_user
 from search import search_wikipedia
 from get_song import play_song
 from speak import Voice
+from weather import get_weather
 
 import sys
 
@@ -21,5 +22,7 @@ while True:
         elif "stop" in response or "quit" in response or "exit" in response:
             Voice.speak_flite("Dom Is Now Exiting")
             sys.exit("Dom Is now Exiting")
+        elif "weather" in response:
+            get_weather()
         greet_user(response)
         search_wikipedia(response)
