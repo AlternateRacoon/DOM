@@ -31,5 +31,6 @@ while True:
             if "next" in response:
                 news_number += 1
                 Voice.speak_flite(read_news_headlines(news_number))
-        greet_user(response)
-        search_wikipedia(response)
+        else:
+            greet_user(response)
+            search_wikipedia(response)
