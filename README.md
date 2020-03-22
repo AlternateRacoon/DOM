@@ -17,6 +17,7 @@ You need to install
 git clone https://github.com/AlternateRacoon/DOM.git 
 
 cd DOM
+
 `
 # USAGE
 `
