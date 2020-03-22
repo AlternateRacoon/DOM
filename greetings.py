@@ -11,6 +11,7 @@ unfiltered_greetings = re.findall("<h3>(.*?)</h3>", html_data)
 
 greetings = []
 
+
 for row in unfiltered_greetings:
     greeting = re.findall("<b>(.*?)</b>", row)
     if greeting:
@@ -29,62 +30,79 @@ for index in range(len(greetings)):
 
 def greet_user(response):
     response = response.lower()
+    check = False
     if response:
         for row in greetings[0]:
             if response in row:
+                check = True
                 Voice.speak_flite("Hello I am Dom", "Nice To meet You")
-                return
+                return check
         for row in greetings[1]:
             if response in row:
+                check = True
                 Voice.speak_flite("I am Fine", "How About You?")
-                return
+                return check
         for row in greetings[2]:
             if response in row:
+                check = True
                 Voice.speak_flite("Nothing much")
-                return
+                return check
         for row in greetings[3]:
             if response in row:
+                check = True
                 Voice.speak_flite("Everything is fine")
-                return
+                return check
         for row in greetings[4]:
             if response in row:
+                check = True
                 Voice.speak_flite("My Day is Just Fine")
-                return
+                return check
                     
         for row in greetings[-2]:
             if response in row:
+                check = True
                 Voice.speak_flite("Nice to Meet you too")
-                return
+                return check
         if "how have you been" in response:
+            check = True
             Voice.speak_flite("I have been fine", "how about you")
+            return check
         if "morning" in response or "afternoon" in response or "evening" in response:
+            check = True
             hour = datetime.datetime.now().hour
             greeting = "Its morning", "Good morning" if 5 <= hour < 12 else "Its Afternoon", "Good afternoon" if hour < 18 else "Its Evening", "Good evening"
             Voice.speak_flite(greeting)
-            return
+            return check
         if "hello" in response:
+            check = True
             Voice.speak_flite("Hello I am Dom", "Nice To meet You")
-            return
+            return check
         if "how are you" in response:
+            check = True
             Voice.speak_flite("I have been fine", "what about you")
-            return
+            return check
         if "fine" in response:
+            check = True
             if "i am" in response:
                 Voice.speak_flite("Good To Know")
-                return
+                return check
             if "are you" in response:
                 Voice.speak_flite("Yes I am Fine")
-                return
+                return check
         if "ok" in response:
+            check = True
             if "i am" in response:
                 Voice.speak_flite("Good To Know")
-                return
+                return check
             if "are you" in response:
                 Voice.speak_flite("Yes I am Fine")
-                return
+                return check
         if "who are you" in response:
+            check = True
             Voice.speak_flite("I am Dom", "Dom stands for Data Operating Module")
-            return
+            return check
         if "who made you" in response:
             Voice.speak_flite("I am Just A Home Project")
-            return
+            return check
+        if not check:
+            return False
