@@ -1,14 +1,16 @@
 from recognize import Recognize
 from media_center import media_center_control,call_dom, connect_media_center
 from greetings import greet_user
-from search import search_wikipedia
+from search import search_wikipedia,read_news_headlines
 from get_song import play_song
 from speak import Voice
 from weather import get_weather
+from sepak import Voice
 
 import sys
 
-
+Voice.speak_flite("Hello", "This Is Dom")
+news_number = 1
 while True:
     response = Recognize.get_recognize_google()
     print(response)
@@ -21,8 +23,13 @@ while True:
             play_song(" ".join(response.split()[1:]))
         elif "stop" in response or "quit" in response or "exit" in response:
             Voice.speak_flite("Dom Is Now Exiting")
-            sys.exit("Dom Is now Exiting")
+            sys.exit()
         elif "weather" in response:
             get_weather()
+        elif "news" in response:
+            Voice.speak_flite(read_news_headlines(news_number))
+            if "next" in response:
+                news_number += 1
+                Voice.speak_flite(read_news_headlines(news_number))
         greet_user(response)
         search_wikipedia(response)
