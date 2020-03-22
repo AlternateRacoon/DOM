@@ -19,7 +19,7 @@ def search_wikipedia(search):
     elif "tell me about" in search:
         search = " ".join(search.split()[2:])
         Voice.speak_flite("Searching about "+ search)
-                info = ""
+        info = ""
         try:
             info = wikipedia.summary(search, sentences=2)
         except wikipedia.DisambiguationError as e:
