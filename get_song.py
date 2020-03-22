@@ -10,7 +10,7 @@ from speak import Voice
 
 
 def play_video(video_name):
-    query_string = urllib.parse.urlencode({"search_query": song_name})
+    query_string = urllib.parse.urlencode({"search_query": video_name})
     html_content = urllib.request.urlopen("http://www.youtube.com/results?" + query_string)
     search_results = re.findall(r'href=\"\/watch\?v=(.{11})', html_content.read().decode())
     url = "https://www.youtube.com/watch?v=" + search_results[0]
