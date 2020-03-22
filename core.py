@@ -5,7 +5,7 @@ from search import search_wikipedia,read_news_headlines
 from get_song import play_song
 from speak import Voice
 from weather import get_weather
-from sepak import Voice
+
 
 import sys
 
