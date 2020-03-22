@@ -1,4 +1,3 @@
-import pyttsx3
 from gtts import gTTS
 import os
 from ibm_watson import TextToSpeechV1
