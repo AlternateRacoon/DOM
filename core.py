@@ -1,7 +1,7 @@
 from recognize import Recognize
 from media_center import media_center_control,call_dom, connect_media_center
 from greetings import greet_user
-from search import search_wikipedia,read_news_headlines
+from search import search_wikipedia,read_news_headlines, joke
 from get_song import play_song
 from speak import Voice
 from weather import get_weather
@@ -31,6 +31,10 @@ while True:
             if "next" in response:
                 news_number += 1
                 Voice.speak_flite(read_news_headlines(news_number))
+        elif "joke" in response:
+            random_joke = joke()
+            Voice.speak_flite(random_joke[0])
+            Voice.speak_flite(random_joke[1])
         else:
             check = greet_user(response)
             if not check:
