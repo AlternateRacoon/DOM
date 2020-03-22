@@ -49,3 +49,18 @@ def read_news_headlines(news_number):
     elif lines[3]:
         lines = lines[3].replace("<i>", "").replace("</i>", "")
     return lines
+def joke():
+    html_data = urllib.request.urlopen(
+        urllib.request.Request("https://www.beano.com/categories/jokes",
+                               headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
+        "utf8")
+    questions = re.findall('"question":"(.*?)"', html_data)
+    answers = re.findall('"answer":"(.*?)"', html_data)
+    jokes = []
+    for row in range(len(questions)):
+        joke = []
+        joke.append(questions[row])
+        joke.append(answers[row])
+        jokes.append(joke)
+    return random.choice(jokes)
+
