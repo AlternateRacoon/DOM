@@ -52,10 +52,11 @@ class Recognize():
             response["error"] = "Unable to recognize speech"
         recog = response["transcription"]
         if recog:
-            recog = recog.replace("don't", "dom")
-            recog = recog.replace("dome", "dom")
-            recog = recog.replace("your view", "YouTube")
-            recog = recog.replace("ks","ksi")
+             recog = recog.replace("Don", "Dom")
+             if "I am" in recog:
+                recog = recog.replace("iron", "Ayaan")
+                recog = recog.replace("Iron", "Ayaan")
+                recog = recog.replace("marine", "Mehreen")
             return recog
         else:
             return False
