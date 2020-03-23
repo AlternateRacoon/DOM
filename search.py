@@ -73,8 +73,6 @@ def search_google(search):
                 urllib.request.Request("https://www.google.com/search?q=" + search,
                                        headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
                 "utf8")
-            file = open("html.txt", "w+")
-            file.write(html_data)
             ans = re.findall(
                 '<div class="BNeawe s3v9rd AP7Wnd"><span class="FCUp0c rQMQod">(.*?)</div></li></ol>',
                 html_data)
@@ -96,7 +94,9 @@ def search_google(search):
                 urllib.request.Request("https://www.google.com/search?q=" + search,
                                        headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
                 "utf8")
-            ans = re.findall('<div class="BNeawe s3v9rd AP7Wnd"><div><div class="BNeawe s3v9rd AP7Wnd">(.*?)</div></div></div></div></div><div', html_data)[0]
+            file = open("html.txt", "w+")
+            file.write(html_data)
+            ans = re.findall('<div class="BNeawe s3v9rd AP7Wnd"><div><div class="BNeawe s3v9rd AP7Wnd">(.*?)</div></div></div></div></div><div', html_data)
             if ans:
                 ans = ans[0]
                 ans = ans.replace('<span class="FCUp0c rQMQod">', '')
@@ -104,7 +104,18 @@ def search_google(search):
                 ans = ans.replace('</span>', '')
                 return ans
             else:
-                return
+                ans = re.findall(
+                    '</span>(.*?)</div></div></div></div></div></div></div></div><div><div class="',
+                    html_data)
+                if ans:
+                    ans = ans[-3]
+                    ans = ans.replace('<span class="FCUp0c rQMQod">', '')
+                    ans = ans.replace('<span>', '')
+                    ans = ans.replace('</span>', '')
+                    ans = ans.replace('<span class="r0bn4c rQMQod"> ', '')
+                    return ans
+                else:
+                    return
     if "when" in search:
         html_data = urllib.request.urlopen(
             urllib.request.Request("https://www.google.com/search?q=" + search,
