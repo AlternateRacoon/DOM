@@ -28,7 +28,8 @@ def search_wikipedia(search):
         except wikipedia.PageError as e:
             Voice.speak_flite("Could not find any results")
         if info:
-            Voice.speak_flite(info)   
+            Voice.speak_flite(info)
+    return "who is" in search or "who was" in search or "who are" in search or "what is" in search or "what was" in search or "history of" in search or "tell me about" in search
 def read_news_headlines(news_number):
     html_data = urllib.request.urlopen(
         urllib.request.Request("https://www.geo.tv/category/pakistan",
