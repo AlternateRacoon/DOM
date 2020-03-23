@@ -1,7 +1,7 @@
 from recognize import Recognize
 from media_center import media_center_control,call_dom, connect_media_center
 from greetings import greet_user
-from search import search_wikipedia,read_news_headlines, joke
+from search import search_wikipedia,read_news_headlines, joke, search_google
 from get_song import play_song
 from speak import Voice
 from weather import get_weather
@@ -38,4 +38,7 @@ while True:
         else:
             check = greet_user(response)
             if not check:
-                search_wikipedia(response)
+                search = search_wikipedia(response)
+                if not search: 
+                    if "how" in response or "when" in response or "why" in response:
+                        search_google(response)
