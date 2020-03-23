@@ -63,4 +63,16 @@ def joke():
         joke.append(answers[row])
         jokes.append(joke)
     return random.choice(jokes)
+def search_google(search):
+    search = search.replace(" ","+")
+    html_data = urllib.request.urlopen(
+        urllib.request.Request("https://www.google.com/search?q=" + search,
+                               headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
+        "utf8")
+
+    ans = re.findall('<div class="BNeawe s3v9rd AP7Wnd"><div><div class="BNeawe s3v9rd AP7Wnd">(.*?)</div></div></div></div></div><div', html_data)[0]
+    ans = ans.replace('<span class="FCUp0c rQMQod">', '')
+    ans = ans.replace('<span>','')
+    ans = ans.replace('</span>', '')
+    return ans
 
