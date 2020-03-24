@@ -5,7 +5,7 @@ from search import search_wikipedia,read_news_headlines, joke, search_google
 from get_song import play_song
 from speak import Voice
 from weather import get_weather
-
+from users import user_stuff
 
 import sys
 
@@ -44,3 +44,6 @@ while True:
                 if not search: 
                     if "how" in response or "when" in response or "why" in response:
                         search_google(response)
+            else:
+                user_stuff(response)
+                
