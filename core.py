@@ -27,14 +27,16 @@ while True:
         elif "weather" in response:
             get_weather()
         elif "news" in response:
-            Voice.speak_flite(read_news_headlines(news_number))
             if "next" in response:
                 news_number += 1
+                Voice.speak_flite(read_news_headlines(news_number))
+            else:
                 Voice.speak_flite(read_news_headlines(news_number))
         elif "joke" in response:
             random_joke = joke()
             Voice.speak_flite(random_joke[0])
             Voice.speak_flite(random_joke[1])
+        
         else:
             check = greet_user(response)
             if not check:
