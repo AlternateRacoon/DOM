@@ -5,15 +5,29 @@ from search import search_wikipedia,read_news_headlines, joke, search_google
 from get_song import play_song
 from speak import Voice
 from weather import get_weather
-from users import user_stuff
+from users import create_user, get_all_users
 
 import sys
+import logging
+import datetime
+
+currentDT = str(datetime.datetime.now())
+
+logging.basicConfig(filename="dom_log.log", level=logging.INFO)
+
+Name = ""
+Age = 0
+Birthday = ""
 
 Voice.speak_flite("Hello", "This Is Dom")
 news_number = 1
 while True:
     response = Recognize.get_recognize_google()
     print(response)
+    if Name:
+        logging.info('[INFO] '+ Name +' said '+ response +'at '+ currentDT)
+    else:
+        logging.info('[INFO] (unidentified user) said ' + response + 'at ' + currentDT)
     if response == False:
         pass
     else:
