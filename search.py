@@ -133,11 +133,12 @@ def search_google(search):
             return ans
         else:
             return
-    elif "why" in search:
+    elif "is" in search:
         html_data = urllib.request.urlopen(
             urllib.request.Request("https://www.google.com/search?q=" + search,
                                    headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
             "utf8")
+
         ans = re.findall('<div class="BNeawe s3v9rd AP7Wnd">(.*?)</div></div></div></div></div>', html_data)
         if ans:
             ans = ans[0]
@@ -150,3 +151,23 @@ def search_google(search):
             return ans
         else:
             return
+    elif "why" in search:
+        html_data = urllib.request.urlopen(
+            urllib.request.Request("https://www.google.com/search?q=" + search,
+                                   headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
+            "utf8")
+
+        ans = re.findall('<div class="BNeawe s3v9rd AP7Wnd">(.*?)</div></div></div></div></div>', html_data)
+        if ans:
+            ans = ans[0]
+            ans = ans.replace('<span class="FCUp0c rQMQod">', '')
+            ans = ans.replace('<span>','')
+            ans = ans.replace('</span>', '')
+            ans = ans.replace('<div class="BNeawe s3v9rd AP7Wnd">','')
+            ans = ans.replace('<div>', '')
+            ans = ans.replace('</div>', '')
+            ans = ans.replace('<span class="r0bn4c rQMQod">','')
+            return ans
+        else:
+            return
+
