@@ -2,7 +2,7 @@ from recognize import Recognize
 from media_center import media_center_control,call_dom, connect_media_center
 from greetings import greet_user
 from search import search_wikipedia,read_news_headlines, joke, search_google
-from get_song import play_song
+from get_song import play_song, play_video
 from speak import Voice
 from weather import get_weather
 from users import create_user, get_all_users
@@ -34,7 +34,11 @@ while True:
         if "break" in response or "sleep" in response:
             call_dom()
         elif "play" in response or "start" in response:
+            play_video(" ".join(response.split()[1:]))
+        elif "song" in response:
             play_song(" ".join(response.split()[1:]))
+        elif "play song" in response or "start song" in response:
+            play_song(" ".join(response.split()[2:]))
         elif "stop" in response or "quit" in response or "exit" in response:
             Voice.speak_flite("Dom Is Now Exiting")
             sys.exit()
