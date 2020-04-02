@@ -24,13 +24,13 @@ news_number = 1
 while True:
     response = Recognize.get_recognize_google()
     print(response)
-    if Name:
-        logging.info('[INFO] '+ Name +' said '+ response +'at '+ currentDT)
-    else:
-        logging.info('[INFO] (unidentified user) said ' + response + 'at ' + currentDT)
     if response == False:
         pass
     else:
+        if Name:
+            logging.info('[INFO] '+ Name +' said '+ response +'at '+ currentDT)
+        else:
+            logging.info('[INFO] (unidentified user) said ' + response + 'at ' + currentDT)
         if "break" in response or "sleep" in response:
             call_dom()
         elif "play" in response or "start" in response:
