@@ -10,6 +10,7 @@ from users import create_user, get_all_users
 import sys
 import logging
 import datetime
+import os
 
 currentDT = str(datetime.datetime.now())
 
