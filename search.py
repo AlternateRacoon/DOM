@@ -96,8 +96,6 @@ def search_google(search):
                 urllib.request.Request("https://www.google.com/search?q=" + search,
                                        headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
                 "utf8")
-            file = open("html.txt", "w+")
-            file.write(html_data)
             ans = re.findall('<div class="BNeawe s3v9rd AP7Wnd"><div><div class="BNeawe s3v9rd AP7Wnd">(.*?)</div></div></div></div></div><div', html_data)
             if ans:
                 ans = ans[0]
