@@ -107,7 +107,7 @@ while True:
             if not check:
                 search = search_wikipedia(response)
                 if not search: 
-                    if "how" in response or "when" in response or "why" in response:
+                    if "how" in response or "when" in response or "why" in response or "is" in response:
                         Voice.speak_flite(search_google(response))
 
                 
