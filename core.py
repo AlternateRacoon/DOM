@@ -54,6 +54,8 @@ while True:
             random_joke = joke()
             Voice.speak_flite(random_joke[0])
             Voice.speak_flite(random_joke[1])
+        elif "update yourself" in response:
+            os.system("cd / && ./update.sh")
         elif "create user" in response:
             Voice.speak_flite("Say The Users Name You Want to Create")
             name = Recognize.get_recognize_google()
