@@ -16,6 +16,6 @@ def get_weather():
     z = x["weather"]
 
     weather_description = z[0]["description"]
-    temprature = str(int(current_temperature - 273.15)) + "°C"
+    temprature = str(int(current_temperature - 273.15)) + " degrees"
     humidity = str(current_humidity) + "%"
     Voice.speak_flite("Currently it is "+ temprature +" outside. The description being "+ weather_description + ". The Humidity is about "+ humidity)
