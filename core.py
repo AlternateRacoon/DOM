@@ -57,6 +57,7 @@ while True:
             Voice.speak_flite(random_joke[1])
         elif "update yourself" in response:
             os.system("cd / && ./update.sh")
+            sys.exit()
         elif "create user" in response:
             Voice.speak_flite("Say The Users Name You Want to Create")
             name = Recognize.get_recognize_google()
