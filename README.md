@@ -14,21 +14,12 @@ You need to install
 - python3
 
 `
-
-
 git clone https://github.com/AlternateRacoon/DOM.git 
-
+`
+`
 cd DOM
-
-
 `
 # USAGE
 `
 python3 core.py 
-`
-
-or
-
-`
-python3 core_ibm.py #faster response but still a bit glitchy
 `
