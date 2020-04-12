@@ -141,6 +141,7 @@ def search_google(search):
             return
 def search_wikipedia(search):
     if "who is" in search or "who was" in search or "who are" in search or "what is" in search or "what was" in search or "history of" in search:
+        search1 = search
         search = search.split()[2:]
         search = " ".join(search)
         Voice.speak_flite("Searching about "+ search)
@@ -151,7 +152,7 @@ def search_wikipedia(search):
             s = random.choice(e.options)
             info = wikipedia.summary(s, sentences=2)
         except wikipedia.PageError as e:
-            google_search = search_google(search)
+            google_search = search_google(search1)
             if google_search:
                 Voice.speak_flite(google_search)
             else:
@@ -159,6 +160,7 @@ def search_wikipedia(search):
         if info:
             Voice.speak_flite(info)
     elif "tell me about" in search:
+        search1 = search
         search = " ".join(search.split()[2:])
         Voice.speak_flite("Searching about "+ search)
         info = ""
@@ -168,7 +170,7 @@ def search_wikipedia(search):
             s = random.choice(e.options)
             info = wikipedia.summary(s, sentences=2)
         except wikipedia.PageError as e:
-            google_search = search_google(search)
+            google_search = search_google(search1)
             if google_search:
                 Voice.speak_flite(google_search)
             else:
