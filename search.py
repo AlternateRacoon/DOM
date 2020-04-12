@@ -39,7 +39,6 @@ def joke():
     return random.choice(jokes)
 def search_google(search):
     search = search.replace(" ","+")
-
     if "how" in search:
         if " to " in search:
             html_data = urllib.request.urlopen(
@@ -63,8 +62,9 @@ def search_google(search):
             else:
                 return
         else:
+            link = "https://www.google.com/search?q=" + search
             html_data = urllib.request.urlopen(
-                urllib.request.Request("https://www.google.com/search?q=" + search,
+                urllib.request.Request(link,
                                        headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
                 "utf8")
             ans = re.findall('<div class="BNeawe s3v9rd AP7Wnd"><div><div class="BNeawe s3v9rd AP7Wnd">(.*?)</div></div></div></div></div><div', html_data)
@@ -92,13 +92,18 @@ def search_google(search):
             urllib.request.Request("https://www.google.com/search?q=" + search,
                                    headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
             "utf8")
-
-        ans = re.findall('<div><div class="BNeawe iBp4i AP7Wnd"><div><div class="BNeawe iBp4i AP7Wnd">(.*?)</div></div></div></div></div></div><div class="kvKEAb iafz5e">', html_data)
+        ans = re.findall('AP7Wnd">(.*?)</div>', html_data)
         if ans:
-            ans = ans[0]
+            if '</span><span class="BNeawe s3v9rd AP7Wnd">' in ans[0]:
+                ans = ans[1]
+            else:
+                ans = ans[0]
+            ans = ans.replace('<div><div class="BNeawe iBp4i AP7Wnd">', '')
+            ans = ans.replace('<div class="Ap5OSd"><div class="BNeawe s3v9rd AP7Wnd">', '')
             ans = ans.replace('<span class="FCUp0c rQMQod">', '')
             ans = ans.replace('<span>','')
             ans = ans.replace('</span>', '')
+            ans = ans.replace('<div class="Ap5OSd">', '')
             return ans
         else:
             return
@@ -125,7 +130,6 @@ def search_google(search):
             urllib.request.Request("https://www.google.com/search?q=" + search,
                                    headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
             "utf8")
-
         ans = re.findall('<div class="BNeawe s3v9rd AP7Wnd">(.*?)</div></div></div></div></div>', html_data)
         if ans:
             ans = ans[0]
@@ -139,6 +143,7 @@ def search_google(search):
             return ans
         else:
             return
+
 def search_wikipedia(search):
 
     if "who is" in search or "who was" in search or "who are" in search or "what is" in search or "what was" in search or "history of" in search or "how many" in search or "how much" in search or "what do they" in search or "how to" in search or "how was" in search or "why did" in search or "how is" in search or "how can" in search or "when is" or "how" in search or "why" in search or "when" in search or "is" in search:
