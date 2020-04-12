@@ -41,7 +41,7 @@ def search_google(search):
     search = search.replace(" ","+")
 
     if "how" in search:
-        if "to" in search:
+        if " to " in search:
             html_data = urllib.request.urlopen(
                 urllib.request.Request("https://www.google.com/search?q=" + search,
                                        headers={'User-Agent': 'Mozilla/5.0'})).read().decode(
