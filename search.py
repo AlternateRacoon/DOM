@@ -140,7 +140,7 @@ def search_google(search):
         else:
             return
 def search_wikipedia(search):
-    if "who is" in search or "who was" in search or "who are" in search or "what is" in search or "what was" in search or "history of" in search:
+    if "who is" in search or "who was" in search or "who are" in search or "what is" in search or "what was" in search or "history of" in search or "how many" in search or "how much" in search or "what do they" in search or "how to" in search or "how was" in search or "why did" in search or "how is" in search or "how can" in search or "when is" or "how" in search or "why" in search or "when" in search or "is" in search:
         search1 = search
         search = search.split()[2:]
         search = " ".join(search)
