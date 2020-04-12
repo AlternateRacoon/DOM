@@ -110,12 +110,6 @@ while True:
             check = greet_user(response)
             if not check:
                 search = search_wikipedia(response)
-                if not search: 
-                    if "how" in response or "when" in response or "why" in response or "is" in response:
-                        google_search = search_google(response)
-                        if google_search:
-                            Voice.speak_flite(google_search)
-                        else:
-                            pass
+
 
                 
