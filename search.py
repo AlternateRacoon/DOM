@@ -140,41 +140,39 @@ def search_google(search):
         else:
             return
 def search_wikipedia(search):
+
     if "who is" in search or "who was" in search or "who are" in search or "what is" in search or "what was" in search or "history of" in search or "how many" in search or "how much" in search or "what do they" in search or "how to" in search or "how was" in search or "why did" in search or "how is" in search or "how can" in search or "when is" or "how" in search or "why" in search or "when" in search or "is" in search:
-        search1 = search
-        search = search.split()[2:]
-        search = " ".join(search)
-        Voice.speak_flite("Searching about "+ search)
-        info = ""
-        try:
-            info = wikipedia.summary(search, sentences=2)
-        except wikipedia.DisambiguationError as e:
-            s = random.choice(e.options)
-            info = wikipedia.summary(s, sentences=2)
-        except wikipedia.PageError as e:
-            google_search = search_google(search1)
-            if google_search:
-                Voice.speak_flite(google_search)
-            else:
+        google_search = search_google(search)
+        if google_search:
+            Voice.speak_flite(google_search)
+        else:
+            search = search.split()[2:]
+            search = " ".join(search)
+            info = ""
+            try:
+                info = wikipedia.summary(search, sentences=2)
+            except wikipedia.DisambiguationError as e:
+                s = random.choice(e.options)
+                info = wikipedia.summary(s, sentences=2)
+            except wikipedia.PageError as e:
                 Voice.speak_flite("Could not find any results")
-        if info:
-            Voice.speak_flite(info)
+            if info:
+                Voice.speak_flite(info)
     elif "tell me about" in search:
-        search1 = search
-        search = " ".join(search.split()[2:])
-        Voice.speak_flite("Searching about "+ search)
-        info = ""
-        try:
-            info = wikipedia.summary(search, sentences=2)
-        except wikipedia.DisambiguationError as e:
-            s = random.choice(e.options)
-            info = wikipedia.summary(s, sentences=2)
-        except wikipedia.PageError as e:
-            google_search = search_google(search1)
-            if google_search:
-                Voice.speak_flite(google_search)
-            else:
+        google_search = search_google(search)
+        if google_search:
+            Voice.speak_flite(google_search)
+        else:
+            search = search.split()[3:]
+            search = " ".join(search)
+            info = ""
+            try:
+                info = wikipedia.summary(search, sentences=2)
+            except wikipedia.DisambiguationError as e:
+                s = random.choice(e.options)
+                info = wikipedia.summary(s, sentences=2)
+            except wikipedia.PageError as e:
                 Voice.speak_flite("Could not find any results")
-        if info:
-            Voice.speak_flite(info)
+            if info:
+                Voice.speak_flite(info)
     return "who is" in search or "who was" in search or "who are" in search or "what is" in search or "what was" in search or "history of" in search or "tell me about" in search
