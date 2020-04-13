@@ -181,3 +181,30 @@ def search_wikipedia(search):
             if info:
                 Voice.speak_flite(info)
     return "who is" in search or "who was" in search or "who are" in search or "what is" in search or "what was" in search or "history of" in search or "tell me about" in search
+def get_recipe(recipe_name):
+    recipe_name = recipe_name.replace(" ", "%20")
+    html_data = urllib.request.urlopen(
+        urllib.request.Request("https://www.allrecipes.com/search/results/?wt="+ recipe_name,
+                               headers={'User-Agent': 'Mozilla/5.0'})).read().decode('utf-8')
+    link = re.findall('<a href="(.*?)" data-content-provider-id="" data-internal-referrer-link="hub recipe" data-internal-', html_data)
+
+    html_data = urllib.request.urlopen(
+        urllib.request.Request(link[0],
+                               headers={'User-Agent': 'Mozilla/5.0'})).read().decode('utf-8')
+    description = html_data.splitlines()[129].replace("description", "").replace('"','').replace(':','')
+    number = 144
+    steps = []
+    while number < len(html_data.splitlines()[148:]):
+        number += 4
+        if '"text": "' in html_data.splitlines()[number]:
+            steps.append(html_data.splitlines()[number].replace('"','').replace('text','').replace(':',''))
+        if '"' in html_data.splitlines()[number] and "," in html_data.splitlines()[number] and '"text": "' not in html_data.splitlines()[number]:
+            break
+
+    ingredients = []
+    for row in html_data.splitlines()[134:]:
+        if '        ],' in row:
+            break
+        else:
+            ingredients.append(row)
+    return description, ingredients, steps
