@@ -29,9 +29,9 @@ while True:
         pass
     else:
         if Name:
-            logging.info('[INFO] '+ Name +' said '+ response +'at '+ currentDT)
+            logging.info('[INFO] '+ Name +' said '+ response +' at '+ currentDT)
         else:
-            logging.info('[INFO] (unidentified user) said ' + response + 'at ' + currentDT)
+            logging.info('[INFO] (unidentified user) said ' + response + ' at ' + currentDT)
         if "break" in response or "sleep" in response:
             call_dom()
         elif "play" in response or "start" in response:
