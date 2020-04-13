@@ -206,5 +206,6 @@ def get_recipe(recipe_name):
         if '        ],' in row:
             break
         else:
-            ingredients.append(row)
+            ingredients.append(row.replace("½", "half").replace("¼", "one fourth").replace("1 ½", "one and a half").replace("2 ½", "two and a half").replace("3 ½", "three and a half").replace("4 ½", "4 and a half").replace("¾", "three fourth"))
     return description, ingredients, steps
+
