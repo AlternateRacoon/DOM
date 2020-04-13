@@ -195,11 +195,9 @@ def get_recipe(recipe_name):
     number = 144
     steps = []
     while number < len(html_data.splitlines()[148:]):
-        number += 4
+        number += 1
         if '"text": "' in html_data.splitlines()[number]:
             steps.append(html_data.splitlines()[number].replace('"','').replace('text','').replace(':',''))
-        if '"' in html_data.splitlines()[number] and "," in html_data.splitlines()[number] and '"text": "' not in html_data.splitlines()[number]:
-            break
 
     ingredients = []
     for row in html_data.splitlines()[134:]:
