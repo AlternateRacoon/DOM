@@ -44,7 +44,7 @@ while True:
             Voice.speak_flite("Dom Is Now Exiting")
             sys.exit()
         elif "recipe for" in response or "recipe of" in response:
-            info = get_recipe(response.split()[2:])
+            info = get_recipe(" ".join(response.split()[2:]))
             Voice.speak_flite(info[0])
             Voice.speak_flite("You will need the following ingredients")
             for row in info[1]:
