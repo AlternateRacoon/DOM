@@ -1,7 +1,7 @@
 from recognize import Recognize
 from media_center import media_center_control,call_dom, connect_media_center
 from greetings import greet_user
-from search import search_wikipedia,read_news_headlines, joke, search_google
+from search import search_wikipedia,read_news_headlines, joke, search_google, get_recipe
 from get_song import play_song, play_video
 from speak import Voice
 from weather import get_weather
@@ -43,6 +43,14 @@ while True:
         elif "stop" in response or "quit" in response or "exit" in response:
             Voice.speak_flite("Dom Is Now Exiting")
             sys.exit()
+        elif "recipe for" in response or "recipe of" in response:
+            info = get_recipe(response.split()[2:])
+            Voice.speak_flite(info[0])
+            Voice.speak_flite("You will need the following ingredients")
+            for row in info[1]:
+                Voice.speak_flite(row)
+            for row in info[2]:
+                Voice.speak_flite(row)
         elif "weather" in response:
             get_weather()
         elif "news" in response:
