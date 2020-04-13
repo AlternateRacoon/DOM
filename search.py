@@ -205,7 +205,9 @@ def get_recipe(recipe_name):
     for row in html_data.splitlines()[134:]:
         if '        ],' in row:
             break
+        elif "recipeIngredient:" in row:
+            pass
         else:
-            ingredients.append(row.replace("½", "half").replace("¼", "one fourth").replace("1 ½", "one and a half").replace("2 ½", "two and a half").replace("3 ½", "three and a half").replace("4 ½", "4 and a half").replace("¾", "three fourth"))
+            ingredients.append(row.replace("½", "half").replace("¼", "one fourth").replace("1 ½", "one and a half").replace("2 ½", "two and a half").replace("3 ½", "three and a half").replace("4 ½", "4 and a half").replace("¾", "three fourth").replace('"','').replace(',','').replace('recipeIngredient: [',''))
     return description, ingredients, steps
 
