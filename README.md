@@ -13,12 +13,18 @@ You need to install
 - pafy
 - python3
 - pygame (for the gui)
+
+
 `
 git clone https://github.com/AlternateRacoon/DOM.git 
 `
+
+
 `
 cd DOM
 `
+
+
 # USAGE
 `
 python3 core.py 
