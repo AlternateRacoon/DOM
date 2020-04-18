@@ -12,7 +12,7 @@ You need to install
 - mplayer
 - pafy
 - python3
-
+- pygame (for the gui)
 `
 git clone https://github.com/AlternateRacoon/DOM.git 
 `
