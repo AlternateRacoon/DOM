@@ -181,9 +181,9 @@ while done:
         elif "play" in response or "start" in response:
             play_video(" ".join(response.split()[1:]))
         elif "time" in response:
-            Voice.speak_flite(str(currentDT.strftime("%I:%M:%S %p")))
+            Voice.speak_flite(currenttime)
         elif "day" in response:
-            Voice.speak_flite(str(currentDT.strftime("%a, %b %d, %Y")))
+            Voice.speak_flite(currentdaymonth)
         elif "song" in response:
             play_video(" ".join(response.split()[1:]))
         elif "play song" in response or "start song" in response:
