@@ -31,7 +31,7 @@ def play_video(video_name):
                     Voice.speak_flite("Stopping Stream")
                     break
     else:
-        cmd = ['mplayer','-novideo','-ao','oss', best.url]
+        cmd = ['mpv','-ao','oss', best.url]
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
         sleep(5)
         while True:
@@ -41,7 +41,7 @@ def play_video(video_name):
                 pass
             else:
                 if "pause" in command or "stop" in command or "exit" in command or "quit" in command:
-                    os.system("pkill mplayer")
+                    os.system("pkill mpv")
                     Voice.speak_flite("Stopping Video")  
                     break
 def play_song(song_name):
