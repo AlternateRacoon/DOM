@@ -1,11 +1,12 @@
 from recognize import Recognize
-from media_center import media_center_control,call_dom, connect_media_center
+from media_center import media_center_control, call_dom, connect_media_center
 from greetings import greet_user
-from search import search_wikipedia,read_news_headlines, joke, search_google, get_recipe
+from search import search_wikipedia, read_news_headlines, joke, search_google, get_recipe
 from get_song import play_song, play_video
 from speak import Voice
 from weather import get_weather
 from users import create_user, get_all_users
+
 
 import sys
 import datetime
@@ -20,13 +21,14 @@ pygame.font.init()
 
 currentDT = str(datetime.datetime.now())
 
-
 Name = ""
 Age = 0
 Birthday = ""
 
 Voice.speak_flite("Hello", "This Is Dom")
 news_number = 2
+
+
 def blit_text(surface, text, pos, font, color=pygame.Color('white')):
     words = [word.split(' ') for word in text.splitlines()]  # 2D array where each row is a list of words.
     space = font.size(' ')[0]  # The width of a space.
@@ -44,20 +46,21 @@ def blit_text(surface, text, pos, font, color=pygame.Color('white')):
         x = pos[0]  # Reset the x.
         y += word_height  # Start on new row.
 
-screen = pygame.display.set_mode([677,530])
+
+screen = pygame.display.set_mode([677, 530])
 
 pygame.display.set_caption("DOM")
 
 clock = pygame.time.Clock()
 
-background_position = [0,0]
+background_position = [0, 0]
 
 myfont = pygame.font.SysFont('Bebas Neue', 40)
 
 fontsmall = pygame.font.SysFont('Bebas Neue', 20)
 
 fontbig = pygame.font.SysFont('Bebas Neue', 60)
-#background_image = pygame.image.load("background.jpg")
+# background_image = pygame.image.load("background.jpg")
 
 news = "-" + read_news_headlines(2)
 news1 = "-" + read_news_headlines(3)
@@ -67,10 +70,10 @@ done = True
 r = sr.Recognizer()
 speech = sr.Microphone()
 
-
 while done:
-    temp = "C.P.U Temprature: "+ subprocess.check_output("cputemp -f n", shell=True).decode("utf8").replace("\n","")
-    response = requests.get("http://api.openweathermap.org/data/2.5/weather?q=Karachi&APPID=07bbb96304be02263bcfa5534021d1c6")
+    temp = "C.P.U Temprature: " + subprocess.check_output("cputemp -f n", shell=True).decode("utf8").replace("\n", "")
+    response = requests.get(
+        "http://api.openweathermap.org/data/2.5/weather?q=Karachi&APPID=07bbb96304be02263bcfa5534021d1c6")
     x = response.json()
     y = x["main"]
     current_temperature = y["temp"]
@@ -79,24 +82,24 @@ while done:
     temprature = str(int(current_temperature - 273.15)) + "°C"
     now = datetime.datetime.now()
     if int(now.strftime("%I")) <= 9:
-        currenttime = now.strftime("%I:%M %p").replace("0","",1)
+        currenttime = now.strftime("%I:%M %p").replace("0", "", 1)
     else:
         currenttime = now.strftime("%I:%M %p")
-    currentmonth = " "+ now.strftime("%B")
+    currentmonth = " " + now.strftime("%B")
     currentday = now.strftime("%A") + ","
     currentdaymonth = currentday + currentmonth
 
-    monthday = myfont.render(currentdaymonth, False, (255,255,255))
+    monthday = myfont.render(currentdaymonth, False, (255, 255, 255))
     time = myfont.render(currenttime, False, (255, 255, 255))
-    weather = myfont.render("Temprature Outside: "+ temprature, False, (255, 255, 255))
+    weather = myfont.render("Temprature Outside: " + temprature, False, (255, 255, 255))
     cpu_temp = myfont.render(temp, False, (255, 255, 255))
 
     screen.fill((0, 0, 0))
     screen.blit(time, [0, 0])
-    screen.blit(monthday, [0,50])
-    screen.blit(weather, [300,0])
+    screen.blit(monthday, [0, 50])
+    screen.blit(weather, [300, 0])
     screen.blit(cpu_temp, [270, 50])
-    blit_text(screen, "Latest News Headlines:", (0,250),myfont)
+    blit_text(screen, "Latest News Headlines:", (0, 250), myfont)
     blit_text(screen, news, (10, 300), fontsmall)
     blit_text(screen, news1, (10, 375), fontsmall)
     blit_text(screen, news2, (10, 450), fontsmall)
@@ -106,7 +109,7 @@ while done:
     pygame.display.flip()
     pygame.display.update()
     with speech as source:
-        blit_text(screen, "Listening", (0,100), fontbig, color=pygame.Color('green'))
+        blit_text(screen, "Listening", (0, 100), fontbig, color=pygame.Color('green'))
         print("listening")
         pygame.display.flip()
         pygame.display.update()
@@ -114,15 +117,15 @@ while done:
         audio = r.listen(source)
     screen.fill((0, 0, 0))
     screen.blit(time, [0, 0])
-    screen.blit(monthday, [0,50])
-    screen.blit(weather, [300,0])
+    screen.blit(monthday, [0, 50])
+    screen.blit(weather, [300, 0])
     screen.blit(cpu_temp, [270, 50])
     blit_text(screen, "Latest News Headlines:", (0, 250), myfont)
     blit_text(screen, news, (10, 300), fontsmall)
     blit_text(screen, news1, (10, 375), fontsmall)
     blit_text(screen, news2, (10, 450), fontsmall)
     print("recognizing")
-    blit_text(screen, "Recognizing", (0,100), fontbig, color=pygame.Color('green'))
+    blit_text(screen, "Recognizing", (0, 100), fontbig, color=pygame.Color('green'))
     pygame.display.flip()
     pygame.display.update()
     try:
@@ -135,8 +138,8 @@ while done:
             recog = recog.replace("Iron", "Ayaan")
     screen.fill((0, 0, 0))
     screen.blit(time, [0, 0])
-    screen.blit(monthday, [0,50])
-    screen.blit(weather, [300,0])
+    screen.blit(monthday, [0, 50])
+    screen.blit(weather, [300, 0])
     screen.blit(cpu_temp, [270, 50])
     blit_text(screen, "Latest News Headlines:", (0, 250), myfont)
     blit_text(screen, news, (10, 300), fontsmall)
@@ -150,20 +153,41 @@ while done:
     blit_text(screen, recog, (0, 100), fontbig, color=pygame.Color(color))
     pygame.display.flip()
     pygame.display.update()
+    currentDT = datetime.datetime.now()
     if "Unable to recognize speech" not in recog:
-        reponse = recog
+        response = recog
         if "break" in response or "sleep" in response:
-            call_dom()
+            Voice.speak_flite("dom is now going to sleep, call again by saying dom")
+            screen.fill((0, 0, 0))
+            screen.blit(time, [0, 0])
+            screen.blit(monthday, [0, 50])
+            screen.blit(weather, [300, 0])
+            screen.blit(cpu_temp, [270, 50])
+            blit_text(screen, "Latest News Headlines:", (0, 250), myfont)
+            blit_text(screen, news, (10, 300), fontsmall)
+            blit_text(screen, news1, (10, 375), fontsmall)
+            blit_text(screen, news2, (10, 450), fontsmall)
+            blit_text(screen, "Sleeping", (0, 100), fontbig, color=pygame.Color("GRAY"))
+            pygame.display.flip()
+            pygame.display.update()
+            while True:
+                response = Recognize.get_recognize_google()
+                print(response)
+                if response == False:
+                    pass
+                elif "dom" in response.lower() or "start" in response:
+                    Voice.speak_flite("Listening...")
+                    break
         elif "play" in response or "start" in response:
             play_video(" ".join(response.split()[1:]))
         elif "time" in response:
-            Voice.speak_mimic(currentDT.strftime("%I:%M:%S %p"))
-        elif "day" in response and "birth" not in response:
-            Voice.speak_mimic(currentDT.strftime("%a, %b %d, %Y"))
+            Voice.speak_flite(str(currentDT.strftime("%I:%M:%S %p")))
+        elif "day" in response:
+            Voice.speak_flite(str(currentDT.strftime("%a, %b %d, %Y")))
         elif "song" in response:
-            play_song(" ".join(response.split()[1:]))
+            play_video(" ".join(response.split()[1:]))
         elif "play song" in response or "start song" in response:
-            play_song(" ".join(response.split()[2:]))
+            play_video(" ".join(response.split()[2:]))
         elif "stop" in response or "quit" in response or "exit" in response:
             Voice.speak_flite("Dom Is Now Exiting")
             sys.exit()
@@ -217,7 +241,7 @@ while done:
                         elif row[0] == "Ayaan":
                             Voice.speak_flite("Hello There Aion, Welcome Back")
                         else:
-                            Voice.speak_flite("Hello There "+ row[0] +", Welcome Back")
+                            Voice.speak_flite("Hello There " + row[0] + ", Welcome Back")
         elif "what is my birthday" in response or "when is my birthday" in response:
             if Birthday:
                 Voice.speak_flite("Your Birthday comes on " + Birthday)
@@ -242,4 +266,3 @@ while done:
             check = greet_user(response)
             if not check:
                 search = search_wikipedia(response)
-    
