@@ -162,7 +162,7 @@ def search_wikipedia(search):
             else:
                 Voice.speak_flite("Could not find any results")
         if info:
-            Voice.speak_flite(info)
+            Voice.speak_flite(info.replace('"',''))
     elif "tell me about" in search:
         search1 = search
         search = " ".join(search.split()[2:])
@@ -180,7 +180,7 @@ def search_wikipedia(search):
             else:
                 Voice.speak_flite("Could not find any results")
         if info:
-            Voice.speak_flite(info)
+            Voice.speak_flite(info.replace('"',''))
 def get_recipe(recipe_name):
     recipe_name = recipe_name.replace(" ", "%20")
     html_data = urllib.request.urlopen(
