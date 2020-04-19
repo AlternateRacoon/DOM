@@ -16,7 +16,7 @@ import requests
 import subprocess
 import speech_recognition as sr
 
-pygame.init()
+pygame.font.init()
 
 currentDT = str(datetime.datetime.now())
 
@@ -151,6 +151,7 @@ while done:
     pygame.display.flip()
     pygame.display.update()
     if "Unable to recognize speech" not in recog:
+        reponse = recog
         if "break" in response or "sleep" in response:
             call_dom()
         elif "play" in response or "start" in response:
