@@ -178,6 +178,10 @@ while done:
                 elif "dom" in response.lower() or "start" in response:
                     Voice.speak_flite("Listening...")
                     break
+        elif "shutdown" in response:
+            os.system("poweroff")
+        elif "reboot" in response:
+            os.system("reboot")
         elif "play" in response or "start" in response:
             play_video(" ".join(response.split()[1:]))
         elif "time" in response:
