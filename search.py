@@ -159,6 +159,8 @@ def search_wikipedia(search):
             google_search = search_google(search1)
             if google_search:
                 return google_search
+            else:
+                return "Could not find any results about it"
         if info:
             return info.replace('"','')
     elif "tell me about" in search:
@@ -175,6 +177,8 @@ def search_wikipedia(search):
             google_search = search_google(search1)
             if google_search:
                 return google_search
+            else: 
+                return "Could not find any results about it"
         if info:
             return info.replace('"','')
     elif "how" in search or "why" in search or "when" in search:
