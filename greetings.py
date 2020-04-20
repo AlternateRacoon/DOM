@@ -71,16 +71,18 @@ def greet_user(response):
             check = True
             return "I have been fine, what about you"
         if "fine" in response:
-            check = True
             if "i am" in response:
+                check = True
                 return "Good To Know"
             if "are you" in response:
+                check = True
                 return "Yes I am Fine"
         if "ok" in response:
-            check = True
             if "i am" in response:
+                check = True
                 return "Good To Know"
             if "are you" in response:
+                check = True
                 return "Yes I am Fine"
         if "who are you" in response:
             check = True
