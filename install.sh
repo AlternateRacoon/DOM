@@ -1,8 +1,8 @@
-sudo apt-get install youtube-dl
-sudo apt-get install portaudio19-dev
-sudo apt-get install git
-sudo apt-get install python3 python3-dev python3-pip
-sudo apt-get install flac
+sudo apt-get install -y youtube-dl 
+sudo apt-get install -y portaudio19-dev 
+sudo apt-get install -y git
+sudo apt-get install -y python3 python3-dev python3-pip
+sudo apt-get install -y flac
 wget https://files.pythonhosted.org/packages/ab/42/b4f04721c5c5bfc196ce156b3c768998ef8c0ae3654ed29ea5020c749a6b/PyAudio-0.2.11.tar.gz
 tar -xzvf PyAudio-0.2.11.tar.gz
 cd PyAudio-0.2.11 && python3 setup.py install
