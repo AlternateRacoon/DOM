@@ -8,13 +8,11 @@ from weather import get_weather
 from users import create_user, get_all_users
 
 import sys
-import logging
 import datetime
 import os
 
 currentDT = str(datetime.datetime.now())
 
-logging.basicConfig(filename="dom_log.log", level=logging.INFO)
 
 Name = ""
 Age = 0
@@ -28,10 +26,6 @@ while True:
     if response == False:
         pass
     else:
-        if Name:
-            logging.info('[INFO] '+ Name +' said '+ response +' at '+ currentDT)
-        else:
-            logging.info('[INFO] (unidentified user) said ' + response + ' at ' + currentDT)
         if "break" in response or "sleep" in response:
             call_dom()
         elif "play" in response or "start" in response:
