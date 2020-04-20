@@ -26,12 +26,10 @@ cd DOM
 
 `
 sudo chmod a+x install.sh
-
 `
 
 `
 ./install.sh
-
 `
 
 # USAGE
