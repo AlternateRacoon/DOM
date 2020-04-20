@@ -42,9 +42,9 @@ while True:
         elif "day today" in response:
             Voice.speak_flite(currentDT.strftime("%A, %B, %Y"))
         elif "song" in response:
-            play_song(" ".join(response.split()[1:]))
+            play_video(" ".join(response.split()[1:]))
         elif "play song" in response or "start song" in response:
-            play_song(" ".join(response.split()[2:]))
+            play_video(" ".join(response.split()[2:]))
         elif "stop" in response or "quit" in response or "exit" in response:
             Voice.speak_flite("Dom Is Now Exiting")
             sys.exit()
