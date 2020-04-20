@@ -3,7 +3,7 @@ DOM stands for Data Operating Module
 it is an assistant which uses mimic/flite as its voice
 and recognizes using google's speech recognition 
 # INSTALLING
-You need to install
+Dependencies it will install
 - SpeechRecognition
 - Pyaudio
 - Flite/Mimic
@@ -24,6 +24,15 @@ git clone https://github.com/AlternateRacoon/DOM.git
 cd DOM
 `
 
+`
+sudo chmod a+x install.sh
+
+`
+
+`
+./install.sh
+
+`
 
 # USAGE
 `
