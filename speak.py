@@ -1,9 +1,6 @@
-from gtts import gTTS
 import os
-from ibm_watson import TextToSpeechV1
-from ibm_watson.websocket import SynthesizeCallback
 import pyaudio
-from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+
 
 class Voice():
     @staticmethod
