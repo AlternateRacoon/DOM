@@ -28,6 +28,10 @@ while True:
     else:
         if "break" in response or "sleep" in response:
             call_dom()
+        elif "shutdown" in response:
+            os.system("poweroff")
+        elif "reboot" in response:
+            os.system("reboot")
         elif "play" in response or "start" in response:
             play_video(" ".join(response.split()[1:]))
         elif "time" in response:
