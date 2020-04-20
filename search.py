@@ -174,9 +174,9 @@ def search_wikipedia(search):
         except wikipedia.PageError as e:
             google_search = search_google(search1)
             if google_search:
-                Voice.speak_flite(google_search)
+                return google_search
         if info:
-            Voice.speak_flite(info.replace('"',''))
+            return info.replace('"','')
     elif "how" in search or "why" in search or "when" in search:
         google_search = search_google(search)
         if google_search:
