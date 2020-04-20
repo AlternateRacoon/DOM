@@ -15,9 +15,9 @@ def play_video(video_name):
     search_results = re.findall(r'href=\"\/watch\?v=(.{11})', html_content.read().decode())
     url = "https://www.youtube.com/watch?v=" + search_results[0]
     video = pafy.new(url)
-    best = video.getbest()
+    best = video.audiostreams[-1]
     if ".m3u8" in best.url:
-        cmd = ['mpv','--no-video','-ao','oss', best.url]
+        cmd = ['mpv','-ao','oss', best.url]
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
         sleep(5)
         while True:
