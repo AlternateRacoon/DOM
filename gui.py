@@ -143,15 +143,21 @@ while done:
         elif "reboot" in response:
             os.system("reboot")
         elif "play" in response or "start" in response:
-            play_video(" ".join(response.split()[1:]))
+            vid_play = play_video(" ".join(response.split()[1:]))
+            speak = Voice.speak_flite(vid_play)
         elif "time" in response:
-            Voice.speak_flite(currenttime)
-        elif "day" in response:
-            Voice.speak_flite(currentdaymonth)
+            if int(currentDT.strftime("%I")) <= 9:                
+                Voice.speak_flite(currentDT.strftime("%I:%M %p").replace('0','',1))
+            else:
+                Voice.speak_flite(currentDT.strftime("%I:%M %p"))
+        elif "day today" in response:
+            Voice.speak_flite(currentDT.strftime("%A, %B, %Y"))
         elif "song" in response:
-            play_video(" ".join(response.split()[1:]))
+            vid_play = play_video(" ".join(response.split()[1:]))
+            speak = Voice.speak_flite(vid_play)
         elif "play song" in response or "start song" in response:
-            play_video(" ".join(response.split()[2:]))
+            vid_play = play_video(" ".join(response.split()[2:]))
+            speak = Voice.speak_flite(vid_play)
         elif "stop" in response or "quit" in response or "exit" in response:
             Voice.speak_flite("Dom Is Now Exiting")
             sys.exit()
@@ -164,7 +170,8 @@ while done:
             for row in info[2]:
                 Voice.speak_flite(row)
         elif "weather" in response:
-            get_weather()
+            text = get_weather()
+            Voice.speak_flite(text)
         elif "news" in response:
             if "next" in response:
                 news_number += 1
@@ -205,7 +212,7 @@ while done:
                         elif row[0] == "Ayaan":
                             Voice.speak_flite("Hello There Aion, Welcome Back")
                         else:
-                            Voice.speak_flite("Hello There " + row[0] + ", Welcome Back")
+                            Voice.speak_flite("Hello There "+ row[0] +", Welcome Back")
         elif "what is my birthday" in response or "when is my birthday" in response:
             if Birthday:
                 Voice.speak_flite("Your Birthday comes on " + Birthday)
@@ -227,6 +234,15 @@ while done:
             else:
                 Voice.speak_flite("Please say who you are")
         else:
-            check = greet_user(response)[0]
-            if not check:
-                search = search_wikipedia(response)
+            
+            check = greet_user(response)
+            if check == False:
+                search = response
+                if "who is" in search or "who was" in search or "who are" in search or "what is" in search or "what was" in search or "history of" in search or "tell me about" in search or "how" in search or "why" in search or "when" in search:
+                    Voice.speak_flite("Searching about "+ " ".join(search.split()[2:]))
+                    search = search_wikipedia(response)
+                    Voice.speak_flite(search)
+            else:
+                Voice.speak_flite(check)
+
+                
