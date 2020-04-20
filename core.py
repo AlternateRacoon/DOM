@@ -38,7 +38,7 @@ while True:
             play_video(" ".join(response.split()[1:]))
         elif "time" in response:
             Voice.speak_mimic(currentDT.strftime("%I:%M:%S %p"))
-        elif "day" in response and "birth" not in response:
+        elif "day today" in response:
             Voice.speak_mimic(currentDT.strftime("%a, %b %d, %Y"))
         elif "song" in response:
             play_song(" ".join(response.split()[1:]))
