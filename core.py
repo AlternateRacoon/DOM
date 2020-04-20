@@ -32,6 +32,9 @@ while True:
             os.system("poweroff")
         elif "reboot" in response:
             os.system("reboot")
+        elif "gui" in response:
+            os.system("dom")
+            sys.exit()
         elif "play" in response or "start" in response:
             vid_play = play_video(" ".join(response.split()[1:]))
             speak = Voice.speak_flite(vid_play)
