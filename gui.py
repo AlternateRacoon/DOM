@@ -62,24 +62,12 @@ fontsmall = pygame.font.SysFont('Bebas Neue', 20)
 fontbig = pygame.font.SysFont('Bebas Neue', 60)
 # background_image = pygame.image.load("background.jpg")
 
-news = "-" + read_news_headlines(2)
-news1 = "-" + read_news_headlines(3)
-news2 = "-" + read_news_headlines(4)
 
 done = True
 r = sr.Recognizer()
 speech = sr.Microphone()
 
 while done:
-    temp = "C.P.U Temprature: " + subprocess.check_output("cputemp -f n", shell=True).decode("utf8").replace("\n", "")
-    response = requests.get(
-        "http://api.openweathermap.org/data/2.5/weather?q=Karachi&APPID=07bbb96304be02263bcfa5534021d1c6")
-    x = response.json()
-    y = x["main"]
-    current_temperature = y["temp"]
-    current_humidity = y["humidity"]
-    z = x["weather"]
-    temprature = str(int(current_temperature - 273.15)) + "°C"
     now = datetime.datetime.now()
     if int(now.strftime("%I")) <= 9:
         currenttime = now.strftime("%I:%M %p").replace("0", "", 1)
@@ -91,18 +79,9 @@ while done:
 
     monthday = myfont.render(currentdaymonth, False, (255, 255, 255))
     time = myfont.render(currenttime, False, (255, 255, 255))
-    weather = myfont.render("Temprature Outside: " + temprature, False, (255, 255, 255))
-    cpu_temp = myfont.render(temp, False, (255, 255, 255))
-
     screen.fill((0, 0, 0))
     screen.blit(time, [0, 0])
     screen.blit(monthday, [0, 50])
-    screen.blit(weather, [300, 0])
-    screen.blit(cpu_temp, [270, 50])
-    blit_text(screen, "Latest News Headlines:", (0, 250), myfont)
-    blit_text(screen, news, (10, 300), fontsmall)
-    blit_text(screen, news1, (10, 375), fontsmall)
-    blit_text(screen, news2, (10, 450), fontsmall)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = False
@@ -118,12 +97,6 @@ while done:
     screen.fill((0, 0, 0))
     screen.blit(time, [0, 0])
     screen.blit(monthday, [0, 50])
-    screen.blit(weather, [300, 0])
-    screen.blit(cpu_temp, [270, 50])
-    blit_text(screen, "Latest News Headlines:", (0, 250), myfont)
-    blit_text(screen, news, (10, 300), fontsmall)
-    blit_text(screen, news1, (10, 375), fontsmall)
-    blit_text(screen, news2, (10, 450), fontsmall)
     print("recognizing")
     blit_text(screen, "Recognizing", (0, 100), fontbig, color=pygame.Color('green'))
     pygame.display.flip()
@@ -139,12 +112,6 @@ while done:
     screen.fill((0, 0, 0))
     screen.blit(time, [0, 0])
     screen.blit(monthday, [0, 50])
-    screen.blit(weather, [300, 0])
-    screen.blit(cpu_temp, [270, 50])
-    blit_text(screen, "Latest News Headlines:", (0, 250), myfont)
-    blit_text(screen, news, (10, 300), fontsmall)
-    blit_text(screen, news1, (10, 375), fontsmall)
-    blit_text(screen, news2, (10, 450), fontsmall)
     print(recog)
     if "Unable to recognize speech" not in recog:
         color = 'WHITE'
@@ -161,13 +128,6 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            screen.blit(weather, [300, 0])
-            screen.blit(cpu_temp, [270, 50])
-            blit_text(screen, "Latest News Headlines:", (0, 250), myfont)
-            blit_text(screen, news, (10, 300), fontsmall)
-            blit_text(screen, news1, (10, 375), fontsmall)
-            blit_text(screen, news2, (10, 450), fontsmall)
-            blit_text(screen, "Sleeping", (0, 100), fontbig, color=pygame.Color("GRAY"))
             pygame.display.flip()
             pygame.display.update()
             while True:
