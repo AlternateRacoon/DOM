@@ -126,7 +126,7 @@ while True:
         else:
             
             check = greet_user(response)
-            if check == False
+            if check == False:
                 search = response
                 if "who is" in search or "who was" in search or "who are" in search or "what is" in search or "what was" in search or "history of" in search or "tell me about" in search or "how" in search or "why" in search or "when" in search:
                     Voice.speak_flite("Searching about"+ search.split()[2:])
