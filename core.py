@@ -120,7 +120,7 @@ while True:
             else:
                 Voice.speak_flite("Please say who you are")
         else:
-            check = greet_user(response)
+            check = greet_user(response)[0]
             if not check:
                 search = search_wikipedia(response)
 
