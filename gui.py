@@ -154,7 +154,7 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(vid_play, "", (0, 200), fontbig,
+            blit_text(screen,vid_play, (0, 200), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -489,7 +489,7 @@ while done:
                     screen.fill((0, 0, 0))
                     screen.blit(time, [0, 0])
                     screen.blit(monthday, [0, 50])
-                    blit_text(screen, search, (0, 200), fontbig,
+                    blit_text(screen, search, (100,0), pygame.font.SysFont('Bebas Neue', 30),
                               color=pygame.Color("white"))
                     pygame.display.flip()
                     pygame.display.update()
