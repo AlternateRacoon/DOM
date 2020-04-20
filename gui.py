@@ -11,6 +11,7 @@ from search import search_wikipedia, read_news_headlines, joke, get_recipe
 from speak import Voice
 from users import create_user, get_all_users
 from weather import get_weather
+from time import sleep
 
 pygame.font.init()
 
