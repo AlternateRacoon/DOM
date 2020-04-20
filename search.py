@@ -22,7 +22,7 @@ def read_news_headlines(news_number):
         lines = lines[2].replace("<i>", "").replace("</i>", "")
     elif lines[3]:
         lines = lines[3].replace("<i>", "").replace("</i>", "")
-    return lines
+    return lines.replace('"','')
 def joke():
     html_data = urllib.request.urlopen(
         urllib.request.Request("https://www.beano.com/categories/jokes",
