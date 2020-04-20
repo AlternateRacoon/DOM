@@ -155,11 +155,11 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen,vid_play, (0, 200), fontbig,
+            blit_text(screen,"Stopping Audio", (0, 200), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
-            Voice.speak_flite(vid_play)
+            Voice.speak_flite("Stopping Audio")
         elif "time" in response:
             if int(currentDT.strftime("%I")) <= 9:
                 screen.fill((0, 0, 0))
@@ -193,11 +193,11 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(vid_play, "", (0, 200), fontbig,
+            blit_text(screen,"Stopping Audio", (0, 200), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
-            Voice.speak_flite(vid_play)
+            Voice.speak_flite("Stopping Audio")
         elif "play song" in response or "start song" in response:
             vid_play = play_video(" ".join(response.split()[2:]))
             screen.fill((0, 0, 0))
