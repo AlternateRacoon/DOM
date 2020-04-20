@@ -35,7 +35,7 @@ while True:
         elif "play" in response or "start" in response:
             play_video(" ".join(response.split()[1:]))
         elif "time" in response:
-            if int(currentDT.strftime("%I")) >= 9:                
+            if int(currentDT.strftime("%I")) <= 9:                
                 Voice.speak_flite(currentDT.strftime("%I:%M %p").replace('0','',1))
             else:
                 Voice.speak_flite(currentDT.strftime("%I:%M %p"))
