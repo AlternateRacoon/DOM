@@ -28,8 +28,6 @@ def play_video(video_name):
             else:
                 if "pause" in command or "stop" in command or "exit" in command or "quit" in command:
                     os.system("pkill mpv")
-                    text = Voice.speak_flite("Stopping Stream")
-                    return text
                     break
                     
     else:
@@ -44,8 +42,6 @@ def play_video(video_name):
             else:
                 if "pause" in command or "stop" in command or "exit" in command or "quit" in command:
                     os.system("pkill mpv")
-                    text = Voice.speak_flite("Stopping Video")  
-                    return text
                     break
  
 def play_song(song_name):
