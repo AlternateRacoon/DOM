@@ -28,8 +28,10 @@ def play_video(video_name):
             else:
                 if "pause" in command or "stop" in command or "exit" in command or "quit" in command:
                     os.system("pkill mpv")
-                    Voice.speak_flite("Stopping Stream")
+                    text = Voice.speak_flite("Stopping Stream")
+                    return text
                     break
+                    
     else:
         cmd = ['mpv','-ao','oss', best.url]
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stdin=subprocess.PIPE)
@@ -42,8 +44,10 @@ def play_video(video_name):
             else:
                 if "pause" in command or "stop" in command or "exit" in command or "quit" in command:
                     os.system("pkill mpv")
-                    Voice.speak_flite("Stopping Video")  
+                    text = Voice.speak_flite("Stopping Video")  
+                    return text
                     break
+ 
 def play_song(song_name):
     song_name = song_name.replace(" ", "+")
     html_data = urllib.request.urlopen(
