@@ -129,7 +129,7 @@ while True:
             if check == False:
                 search = response
                 if "who is" in search or "who was" in search or "who are" in search or "what is" in search or "what was" in search or "history of" in search or "tell me about" in search or "how" in search or "why" in search or "when" in search:
-                    Voice.speak_flite("Searching about"+ " ".join(search.split()[2:]))
+                    Voice.speak_flite("Searching about "+ " ".join(search.split()[2:]))
                     search = search_wikipedia(response)
                     Voice.speak_flite(search)
             else:
