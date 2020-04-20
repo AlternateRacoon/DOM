@@ -144,7 +144,7 @@ def search_google(search):
         else:
             return
 def search_wikipedia(search):
-    if "who is" in search or "who was" in search or "who are" in search or "what is" in search or "what was" in search or "history of" in search or "how" in search or "why" in search or "when" in search or "what" in search:
+    if "who is" in search or "who was" in search or "who are" in search or "what is" in search or "what was" in search or "history of" in search or:
         search1 = search
         search = search.split()[2:]
         search = " ".join(search)
@@ -181,6 +181,10 @@ def search_wikipedia(search):
                 Voice.speak_flite("Could not find any results")
         if info:
             Voice.speak_flite(info.replace('"',''))
+    elif "how" in search or "why" in search or "when" in search:
+        google_search = search_google(search)
+        if google_search:
+            Voice.speak_flite(google_search)
 def get_recipe(recipe_name):
     recipe_name = recipe_name.replace(" ", "%20")
     html_data = urllib.request.urlopen(
