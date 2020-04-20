@@ -149,7 +149,7 @@ def search_wikipedia(search):
         search = search.split()[2:]
         search = " ".join(search)
 
-        info = ""
+        info = False
         try:
             info = wikipedia.summary(search, sentences=2)
         except wikipedia.DisambiguationError as e:
@@ -165,7 +165,7 @@ def search_wikipedia(search):
         search1 = search
         search = " ".join(search.split()[2:])
         Voice.speak_flite("Searching about " + search)
-        info = ""
+        info = False
         try:
             info = wikipedia.summary(search, sentences=2)
         except wikipedia.DisambiguationError as e:
