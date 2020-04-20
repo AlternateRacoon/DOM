@@ -118,6 +118,7 @@ while done:
         blit_text(screen, recog, (0, 200), fontbig, color=pygame.Color(color))
     pygame.display.flip()
     pygame.display.update()
+    sleep(5)
     currentDT = datetime.datetime.now()
     if "Unable to recognize speech" not in recog:
         response = recog
