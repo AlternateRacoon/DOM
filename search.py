@@ -234,7 +234,7 @@ def translate_english_to_urdu(word):
         urllib.request.Request(url,
                                headers={'User-Agent': 'Mozilla/5.0'})).read().decode('utf8')
     link = re.findall('<a class="fs16" href="(.*?)">', html_data)
-    if link:
+    if len(link) == 0::
         return link
     else:
         link = link[0]
