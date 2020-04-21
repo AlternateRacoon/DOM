@@ -42,13 +42,13 @@ while True:
             first = int(response.split()[0])
             second = int(response.split()[2])
             if " + " in response:
-                Voice.speak_flite(first + second)
+                Voice.speak_flite(str(first + second))
             if " - " in response:
-                Voice.speak_flite(first - second)
+                Voice.speak_flite(str(first - second))
             if " x " in response:
-                Voice.speak_flite(first * second)
+                Voice.speak_flite(str(first * second))
             if " / " in response:
-                Voice.speak_flite(first / second)
+                Voice.speak_flite(str(first / second))
         elif "what does" in response and "mean in Urdu" in response:
             word = response.split()[2]
             urdu_word = translate_english_to_urdu(word)
