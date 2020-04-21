@@ -18,5 +18,4 @@ pip3 install ibm_watson
 pip3 install ibm_cloud_sdk_core
 pip3 install youtube-dl
 sudo apt-get install mpv
-cd / && git clone https://github.com/AlternateRacoon/DOM.git
-cd /DOM && python3 core.py
+
