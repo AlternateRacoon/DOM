@@ -162,7 +162,7 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, word + " means "+ english_word + " in english", (0, 200), fontbig,
+                blit_text(screen, word + ' means "'+ english_word + '" in english', (0, 200), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -183,7 +183,7 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, word + " means "+ urdu_word + " in urdu", (0, 200), fontbig,
+                blit_text(screen, word + ' means "'+ urdu_word + '" in urdu', (0, 200), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
