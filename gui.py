@@ -7,7 +7,7 @@ import speech_recognition as sr
 from get_song import play_video
 from greetings import greet_user
 from recognize import Recognize
-from search import search_wikipedia, read_news_headlines, joke, get_recipe
+from search import search_wikipedia, read_news_headlines, joke, get_recipe, translate_urdu_to_english, translate_english_to_urdu
 from speak import Voice
 from users import create_user, get_all_users
 from weather import get_weather
