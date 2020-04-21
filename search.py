@@ -213,4 +213,34 @@ def get_recipe(recipe_name):
         else:
             ingredients.append(row.replace("½", "half").replace("¼", "one fourth").replace("1 ½", "one and a half").replace("2 ½", "two and a half").replace("3 ½", "three and a half").replace("4 ½", "4 and a half").replace("¾", "three fourth").replace('"','').replace(',','').replace('recipeIngredient: [',''))
     return description, ingredients, steps
+def translate_urdu_to_english(word):
+    url = "https://www.urdupoint.com/dictionary/roman-urdu-word-"+ word +".html"
+    html_data = urllib.request.urlopen(
+        urllib.request.Request(url,
+                               headers={'User-Agent': 'Mozilla/5.0'})).read().decode('utf8')
+    link = re.findall('<a class="name_list_box lh19" href="(.*?)">', html_data)
+    if len(link) == 0:
+        return "no word found"
+    else:
+        html_data = urllib.request.urlopen(
+            urllib.request.Request(link[0],
+                                   headers={'User-Agent': 'Mozilla/5.0'})).read().decode('utf8')
+        word = re.findall('</th><td class="fs17">(.*?)</td></tr><tr><th>', html_data)
+        return word[1]
+
+def translate_english_to_urdu(word):
+    url = "https://www.urdupoint.com/dictionary/english-word-"+ word +".html"
+    html_data = urllib.request.urlopen(
+        urllib.request.Request(url,
+                               headers={'User-Agent': 'Mozilla/5.0'})).read().decode('utf8')
+    link = re.findall('<a class="fs16" href="(.*?)">', html_data)
+    if link:
+        return link
+    else:
+        link = link[0]
+    html_data = urllib.request.urlopen(
+        urllib.request.Request(link,
+                               headers={'User-Agent': 'Mozilla/5.0'})).read().decode('utf8')
+    urdu_word = re.findall('span class="arial fl al half">(.*?)</span></a>', html_data)
+    return urdu_word[0]
 
