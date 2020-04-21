@@ -1,7 +1,7 @@
 from recognize import Recognize
 from media_center import media_center_control,call_dom, connect_media_center
 from greetings import greet_user
-from search import search_wikipedia,read_news_headlines, joke, search_google, get_recipe
+from search import search_wikipedia,read_news_headlines, joke, search_google, get_recipe, translate_urdu_to_english, translate_english_to_urdu
 from get_song import play_song, play_video
 from speak import Voice
 from weather import get_weather
@@ -11,6 +11,7 @@ from time import sleep
 import sys
 import datetime
 import os
+
 
 
 currentDT = datetime.datetime.now()
@@ -30,11 +31,25 @@ while True:
     else:
         if "break" in response or "sleep" in response:
             call_dom()
+        elif "what does" in response and "mean in english" in response:
+            word = response.split()[2]
+            english_word = translate_urdu_to_english(word)
+            if "no word found" in english_word:
+                Voice.speak_flite("no word found")
+            else:
+                Voice.speak_flite(word + " means "+ english_word + " in english")
+        elif "what does" in response and "mean in urdu" in response:
+            word = response.split()[2]
+            urdu_word = translate_english_to_urdu(word)
+            if "no word found" in urdu_word:
+                Voice.speak_flite("no word found")
+            else:
+                Voice.speak_flite(word + " means "+ urdu_word + " in urdu")
         elif "shutdown" in response:
             os.system("poweroff")
         elif "reboot" in response:
             os.system("reboot")
-        elif "gui" in response:
+        elif "g u i" in response:
             os.system("dom")
             sys.exit()
         elif "play" in response or "start" in response:
