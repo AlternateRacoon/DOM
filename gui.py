@@ -146,6 +146,45 @@ while done:
                     pygame.display.update()
                     Voice.speak_flite("Listening...")
                     break
+        elif " + " in response or " - " in response or " x " in response or " / " in response:
+            first = int(response.split()[0])
+            second = int(response.split()[2])
+            if " + " in response:
+                screen.fill((0, 0, 0))
+                screen.blit(time, [0, 0])
+                screen.blit(monthday, [0, 50])
+                blit_text(screen, str(first + second), (0, 200), fontbig,
+                          color=pygame.Color("white"))
+                pygame.display.flip()
+                pygame.display.update()
+                Voice.speak_flite(str(first + second))
+            if " - " in response:
+                screen.fill((0, 0, 0))
+                screen.blit(time, [0, 0])
+                screen.blit(monthday, [0, 50])
+                blit_text(screen, str(first - second), (0, 200), fontbig,
+                          color=pygame.Color("white"))
+                pygame.display.flip()
+                pygame.display.update()
+                Voice.speak_flite(str(first - second))
+            if " x " in response:
+                screen.fill((0, 0, 0))
+                screen.blit(time, [0, 0])
+                screen.blit(monthday, [0, 50])
+                blit_text(screen, str(first * second), (0, 200), fontbig,
+                          color=pygame.Color("white"))
+                pygame.display.flip()
+                pygame.display.update()
+                Voice.speak_flite(str(first * second))
+            if " / " in response:
+                screen.fill((0, 0, 0))
+                screen.blit(time, [0, 0])
+                screen.blit(monthday, [0, 50])
+                blit_text(screen, str(first / second), (0, 200), fontbig,
+                          color=pygame.Color("white"))
+                pygame.display.flip()
+                pygame.display.update()
+                Voice.speak_flite(str(first / second))
         elif "what does" in response and "mean in English" in response:
             word = response.split()[2]
             english_word = translate_urdu_to_english(word)
