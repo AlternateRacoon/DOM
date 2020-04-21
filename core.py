@@ -31,7 +31,7 @@ while True:
     else:
         if "break" in response or "sleep" in response:
             call_dom()
-        elif "what does" in response and "mean in english" in response:
+        elif "what does" in response and "mean in English" in response:
             word = response.split()[2]
             english_word = translate_urdu_to_english(word)
             if "no word found" in english_word:
