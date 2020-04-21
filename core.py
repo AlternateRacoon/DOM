@@ -38,6 +38,17 @@ while True:
                 Voice.speak_flite("no word found")
             else:
                 Voice.speak_flite(word + " means "+ english_word + " in english")
+        elif " + " in response or " - " in response or " x " in response or " / " in response:
+            first = int(response.split()[0])
+            second = int(response.split()[2])
+            if " + " in response:
+                Voice.speak_flite(first + second)
+            if " - " in response:
+                Voice.speak_flite(first - second)
+            if " x " in response:
+                Voice.speak_flite(first * second)
+            if " / " in response:
+                Voice.speak_flite(first / second)
         elif "what does" in response and "mean in Urdu" in response:
             word = response.split()[2]
             urdu_word = translate_english_to_urdu(word)
