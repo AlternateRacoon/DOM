@@ -146,6 +146,48 @@ while done:
                     pygame.display.update()
                     Voice.speak_flite("Listening...")
                     break
+        elif "what does" in response and "mean in English" in response:
+            word = response.split()[2]
+            english_word = translate_urdu_to_english(word)
+            if "no word found" in english_word:
+                screen.fill((0, 0, 0))
+                screen.blit(time, [0, 0])
+                screen.blit(monthday, [0, 50])
+                blit_text(screen, "No Word Found", (0, 200), fontbig,
+                          color=pygame.Color("white"))
+                pygame.display.flip()
+                pygame.display.update()
+                Voice.speak_flite("no word found")
+            else:
+                screen.fill((0, 0, 0))
+                screen.blit(time, [0, 0])
+                screen.blit(monthday, [0, 50])
+                blit_text(screen, word + " means "+ english_word + " in english", (0, 200), fontbig,
+                          color=pygame.Color("white"))
+                pygame.display.flip()
+                pygame.display.update()
+                Voice.speak_flite(word + " means "+ english_word + " in english")
+        elif "what does" in response and "mean in Urdu" in response:
+            word = response.split()[2]
+            urdu_word = translate_english_to_urdu(word)
+            if "no word found" in urdu_word:
+                screen.fill((0, 0, 0))
+                screen.blit(time, [0, 0])
+                screen.blit(monthday, [0, 50])
+                blit_text(screen, "No Word Found", (0, 200), fontbig,
+                          color=pygame.Color("white"))
+                pygame.display.flip()
+                pygame.display.update()
+                Voice.speak_flite("no word found")
+            else:
+                screen.fill((0, 0, 0))
+                screen.blit(time, [0, 0])
+                screen.blit(monthday, [0, 50])
+                blit_text(screen, word + " means "+ urdu_word + " in urdu", (0, 200), fontbig,
+                          color=pygame.Color("white"))
+                pygame.display.flip()
+                pygame.display.update()
+                Voice.speak_flite(word + " means "+ urdu_word + " in urdu")
         elif "shutdown" in response:
             os.system("poweroff")
         elif "reboot" in response:
