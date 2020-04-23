@@ -49,6 +49,10 @@ while True:
                 Voice.speak_flite(str(first * second))
             if " / " in response:
                 Voice.speak_flite(str(first / second))
+        elif "square root of" in response:
+            number = int(response.split()[3])
+            square_root = number ** 0.5
+            Voice.speak_flite(str(square_root))
         elif "what does" in response and "mean in Urdu" in response:
             word = response.split()[2]
             urdu_word = translate_english_to_urdu(word)
