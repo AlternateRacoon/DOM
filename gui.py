@@ -185,6 +185,17 @@ while done:
                 pygame.display.flip()
                 pygame.display.update()
                 Voice.speak_flite(str(first / second))
+        elif "square root of" in response:
+            number = int(response.split()[3])
+            square_root = str(number ** 0.5)
+            screen.fill((0, 0, 0))
+            screen.blit(time, [0, 0])
+            screen.blit(monthday, [0, 50])
+            blit_text(screen, square_root, (0, 200), fontbig,
+                      color=pygame.Color("white"))
+            pygame.display.flip()
+            pygame.display.update()
+            Voice.speak_flite(square_root)
         elif "what does" in response and "mean in English" in response:
             word = response.split()[2]
             english_word = translate_urdu_to_english(word)
