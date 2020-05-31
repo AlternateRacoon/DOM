@@ -1,4 +1,5 @@
 import os
+
 import pyaudio
 
 
@@ -12,17 +13,20 @@ class Voice():
         engine.setProperty('voice', voices[voice].id)
         engine.say(words)
         engine.runAndWait()
+
     @staticmethod
     def speak_google(words):
         tts = gTTS(words)
         tts.save("voice-google.mp3")
         print(words)
         os.system("mplayer voice-google.mp3")
+
     @staticmethod
     def speak_ibm(*words):
         authenticator = IAMAuthenticator('api_key')
         service = TextToSpeechV1(authenticator=authenticator)
-        service.set_service_url('https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/0dc8fc0f-71b4-4636-b389-a92cd2fd182e')
+        service.set_service_url(
+            'https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/0dc8fc0f-71b4-4636-b389-a92cd2fd182e')
 
         class Play(object):
 
@@ -85,13 +89,13 @@ class Voice():
 
         test_callback = MySynthesizeCallback()
         if len(words) == 1:
-            SSML_text = "<speak>"+ words[0]  +"</speak>"
+            SSML_text = "<speak>" + words[0] + "</speak>"
         if len(words) == 2:
             SSML_text = """
             <speak version="1.0">
               <paragraph>
-                <sentence>"""+ words[0] +"""</sentence>
-                <s>"""+ words[1] +"""</s>
+                <sentence>""" + words[0] + """</sentence>
+                <s>""" + words[1] + """</s>
               </paragraph>
             </speak>"""
 
@@ -100,12 +104,14 @@ class Voice():
                                            accept='audio/wav',
                                            voice="en-US_HenryV3Voice"
                                            )
+
     @staticmethod
     def speak_mimic(*words):
         if len(words) == 1:
-            os.system('cd ~/mimic1/ && ./mimic -t "'+ words[0] +'" ')
+            os.system('cd ~/mimic1/ && ./mimic -t "' + words[0] + '" ')
         if len(words) == 2:
-            os.system('cd ~/mimic1/ && ./mimic -t "'+ words[0] +', '+ words[1] +'"')
+            os.system('cd ~/mimic1/ && ./mimic -t "' + words[0] + ', ' + words[1] + '"')
+
     @staticmethod
     def speak_flite(*words):
         text = "The personal pronoun you is the second-person personal pronoun, both singular and plural, and both nominative and oblique case in Modern English. The oblique (objective) form, you, functioned previously in the roles of both accusative and dative, as well as all instances following a preposition."
@@ -113,7 +119,7 @@ class Voice():
             if text in words[0]:
                 pass
             else:
-                os.system('cd /flite/ && ./bin/flite -t "'+ words[0] +'" -voice mycroft_voice_4.0.flitevox ')
+                os.system('cd /flite/ && ./bin/flite -t "' + words[0] + '" -voice mycroft_voice_4.0.flitevox ')
                 print(words[0])
         if len(words) == 2:
             if text in words[0]:
@@ -122,5 +128,6 @@ class Voice():
             if text in words[1]:
                 pass
             else:
-                os.system('cd /flite/ && ./bin/flite -t "'+ words[0] +', '+ words[1] +'" -voice mycroft_voice_4.0.flitevox')
+                os.system('cd /flite/ && ./bin/flite -t "' + words[0] + ', ' + words[
+                    1] + '" -voice mycroft_voice_4.0.flitevox')
                 print(words[0], words[1])

@@ -1,5 +1,5 @@
-sudo apt-get install -y youtube-dl 
-sudo apt-get install -y portaudio19-dev 
+sudo apt-get install -y youtube-dl
+sudo apt-get install -y portaudio19-dev
 sudo apt-get install -y git
 sudo apt-get install -y python3 python3-dev python3-pip
 sudo apt-get install -y flac
@@ -18,4 +18,3 @@ pip3 install ibm_watson
 pip3 install ibm_cloud_sdk_core
 pip3 install youtube-dl
 sudo apt-get install mpv
-

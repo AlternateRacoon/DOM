@@ -1,21 +1,18 @@
-from recognize import Recognize
-from media_center import media_center_control,call_dom, connect_media_center
-from greetings import greet_user
-from search import search_wikipedia,read_news_headlines, joke, search_google, get_recipe, translate_urdu_to_english, translate_english_to_urdu
-from get_song import play_song, play_video
-from speak import Voice
-from weather import get_weather
-from users import create_user, get_all_users
-from time import sleep
-
-import sys
 import datetime
 import os
+import sys
 
-
+from get_song import play_video
+from greetings import greet_user
+from media_center import call_dom
+from recognize import Recognize
+from search import search_wikipedia, read_news_headlines, joke, get_recipe, translate_urdu_to_english, \
+    translate_english_to_urdu, usd_to_pkr, pkr_to_usd
+from speak import Voice
+from users import create_user, get_all_users
+from weather import get_weather
 
 currentDT = datetime.datetime.now()
-
 
 Name = ""
 Age = 0
@@ -23,21 +20,35 @@ Birthday = ""
 
 Voice.speak_flite("Hello", "This Is Dom")
 news_number = 1
+
 while True:
+
     response = Recognize.get_recognize_google()
-    print(response)
-    if response == False:
+    if not response:
         pass
     else:
-        if "break" in response or "sleep" in response:
+        if "play" in response or "start" in response:
+            vid_play = play_video(" ".join(response.split()[1:]))
+            speak = Voice.speak_flite("Stopping Audio")
+        elif "break" in response or "sleep" in response:
             call_dom()
+        elif "rupees to US dollar" in response:
+            number = pkr_to_usd(response.split()[2])
+            Voice.speak_flite(str(number) + " U.S Dollar")
+        elif "US dollar to rupees" in response:
+            number = usd_to_pkr(response.split()[2])
+            Voice.speak_flite(str(number) + " Rupees")
+        elif "spelling of" in response:
+            word = " ".join(response.split()[2:])
+            for row in range(len(word)):
+                Voice.speak_flite(word[row])
         elif "what does" in response and "mean in English" in response:
             word = response.split()[2]
             english_word = translate_urdu_to_english(word)
             if "no word found" in english_word:
                 Voice.speak_flite("no word found")
             else:
-                Voice.speak_flite(word + " means "+ english_word + " in english")
+                Voice.speak_flite(word + " means " + english_word + " in english")
         elif " + " in response or " - " in response or " x " in response or " / " in response:
             first = int(response.split()[0])
             second = int(response.split()[2])
@@ -59,7 +70,7 @@ while True:
             if "no word found" in urdu_word:
                 Voice.speak_flite("no word found")
             else:
-                Voice.speak_flite(word + " means "+ urdu_word + " in urdu")
+                Voice.speak_flite(word + " means " + urdu_word + " in urdu")
         elif "shutdown" in response:
             os.system("poweroff")
         elif "reboot" in response:
@@ -67,22 +78,19 @@ while True:
         elif "g u i" in response:
             os.system("dom")
             sys.exit()
-        elif "play" in response or "start" in response:
-            vid_play = play_video(" ".join(response.split()[1:]))
-            speak = Voice.speak_flite(vid_play)
         elif "time" in response:
-            if int(currentDT.strftime("%I")) <= 9:                
-                Voice.speak_flite(currentDT.strftime("%I:%M %p").replace('0','',1))
+            if int(currentDT.strftime("%I")) <= 9:
+                Voice.speak_flite(currentDT.strftime("%I:%M %p").replace('0', '', 1))
             else:
                 Voice.speak_flite(currentDT.strftime("%I:%M %p"))
         elif "day today" in response:
             Voice.speak_flite(currentDT.strftime("%A, %B, %Y"))
         elif "song" in response:
             vid_play = play_video(" ".join(response.split()[1:]))
-            speak = Voice.speak_flite(vid_play)
+            speak = Voice.speak_flite("Stopping Audio")
         elif "play song" in response or "start song" in response:
             vid_play = play_video(" ".join(response.split()[2:]))
-            speak = Voice.speak_flite(vid_play)
+            speak = Voice.speak_flite("Stopping Audio")
         elif "stop" in response or "quit" in response or "exit" in response:
             Voice.speak_flite("Dom Is Now Exiting")
             sys.exit()
@@ -137,7 +145,7 @@ while True:
                         elif row[0] == "Ayaan":
                             Voice.speak_flite("Hello There Aion, Welcome Back")
                         else:
-                            Voice.speak_flite("Hello There "+ row[0] +", Welcome Back")
+                            Voice.speak_flite("Hello There " + row[0] + ", Welcome Back")
         elif "what is my birthday" in response or "when is my birthday" in response:
             if Birthday:
                 Voice.speak_flite("Your Birthday comes on " + Birthday)
@@ -159,15 +167,13 @@ while True:
             else:
                 Voice.speak_flite("Please say who you are")
         else:
-            
+
             check = greet_user(response)
-            if check == False:
+            if not check:
                 search = response
                 if "who is" in search or "who was" in search or "who are" in search or "what is" in search or "what was" in search or "history of" in search or "tell me about" in search or "how" in search or "why" in search or "when" in search:
-                    Voice.speak_flite("Searching about "+ " ".join(search.split()[2:]))
+                    Voice.speak_flite("Searching about " + " ".join(search.split()[2:]))
                     search = search_wikipedia(response)
                     Voice.speak_flite(search)
             else:
                 Voice.speak_flite(check)
-
-                

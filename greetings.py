@@ -2,15 +2,12 @@ import datetime
 import re
 import urllib.request
 
-from speak import Voice
-
 html_data = urllib.request.urlopen("https://www.fluentu.com/blog/english/english-greetings-expressions/").read().decode(
     "utf-8")
 
 unfiltered_greetings = re.findall("<h3>(.*?)</h3>", html_data)
 
 greetings = []
-
 
 for row in unfiltered_greetings:
     greeting = re.findall("<b>(.*?)</b>", row)
@@ -27,6 +24,7 @@ for index in range(len(greetings)):
         greetings[index][row] = greetings[index][row].replace("how’s", "how is")
         greetings[index][row] = greetings[index][row].replace("it’s", "it is")
         greetings[index][row] = greetings[index][row].replace("?", "")
+
 
 def greet_user(response):
     response = response.lower()

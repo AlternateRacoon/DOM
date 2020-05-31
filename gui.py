@@ -1,21 +1,36 @@
 import datetime
 import os
 import sys
+from time import sleep
 
 import pygame
+import requests
 import speech_recognition as sr
 from get_song import play_video
 from greetings import greet_user
 from recognize import Recognize
-from search import search_wikipedia, read_news_headlines, joke, get_recipe, translate_urdu_to_english, translate_english_to_urdu
+from search import search_wikipedia, read_news_headlines, joke, get_recipe, translate_urdu_to_english, \
+    translate_english_to_urdu
 from speak import Voice
 from users import create_user, get_all_users
 from weather import get_weather
-from time import sleep
 
 pygame.font.init()
 
 currentDT = str(datetime.datetime.now())
+
+_image_library = {}
+
+
+def get_image(path):
+    global _image_library
+    image = _image_library.get(path)
+    if image == None:
+        canonicalized_path = path.replace('/', os.sep).replace('\\', os.sep)
+        image = pygame.image.load(canonicalized_path)
+        _image_library[path] = image
+    return image
+
 
 Name = ""
 Age = 0
@@ -23,6 +38,17 @@ Birthday = ""
 
 Voice.speak_flite("Hello", "This Is Dom")
 news_number = 2
+
+response = requests.get(
+    "http://api.openweathermap.org/data/2.5/weather?q=Karachi&APPID=07bbb96304be02263bcfa5534021d1c6")
+
+x = response.json()
+
+y = x["main"]
+
+current_temperature = y["temp"]
+
+temprature = str(int(current_temperature - 273.15)) + " degrees"
 
 
 def blit_text(surface, text, pos, font, color=pygame.Color('white')):
@@ -43,7 +69,7 @@ def blit_text(surface, text, pos, font, color=pygame.Color('white')):
         y += word_height  # Start on new row.
 
 
-screen = pygame.display.set_mode([677, 530])
+screen = pygame.display.set_mode([1024, 768])
 
 pygame.display.set_caption("DOM")
 
@@ -55,9 +81,8 @@ myfont = pygame.font.SysFont('Bebas Neue', 40)
 
 fontsmall = pygame.font.SysFont('Bebas Neue', 20)
 
-fontbig = pygame.font.SysFont('Bebas Neue', 60)
+fontbig = pygame.font.SysFont('Bebas Neue', 100)
 # background_image = pygame.image.load("background.jpg")
-
 
 done = True
 r = sr.Recognizer()
@@ -72,12 +97,14 @@ while done:
     currentmonth = " " + now.strftime("%B")
     currentday = now.strftime("%A") + ","
     currentdaymonth = currentday + currentmonth
-    position1 = (245, 200)
+    position1 = (375, 325)
     monthday = myfont.render(currentdaymonth, False, (255, 255, 255))
     time = myfont.render(currenttime, False, (255, 255, 255))
+    temp = myfont.render(temprature, False, (255, 255, 255))
     screen.fill((0, 0, 0))
     screen.blit(time, [0, 0])
     screen.blit(monthday, [0, 50])
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = False
@@ -93,6 +120,7 @@ while done:
     screen.fill((0, 0, 0))
     screen.blit(time, [0, 0])
     screen.blit(monthday, [0, 50])
+
     print("recognizing")
     blit_text(screen, "Recognizing", position1, fontbig, color=pygame.Color('green'))
     pygame.display.flip()
@@ -108,15 +136,17 @@ while done:
     screen.fill((0, 0, 0))
     screen.blit(time, [0, 0])
     screen.blit(monthday, [0, 50])
+
     print(recog)
     if "Unable to recognize speech" not in recog:
         color = 'WHITE'
     else:
         color = 'RED'
+
     if int(len(recog.split())) < 5:
         blit_text(screen, recog, position1, fontbig, color=pygame.Color(color))
     else:
-        blit_text(screen, recog, (0, 200), fontbig, color=pygame.Color(color))
+        blit_text(screen, recog, (0, 275), fontbig, color=pygame.Color(color))
     pygame.display.flip()
     pygame.display.update()
     sleep(5)
@@ -127,7 +157,9 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen, "dom is now going to sleep, call again by saying dom", (0,200), fontbig,color=pygame.Color("white"))
+
+            blit_text(screen, "dom is now going to sleep, call again by saying dom", (0, 200), fontbig,
+                      color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
             Voice.speak_flite("dom is now going to sleep, call again by saying dom")
@@ -140,7 +172,8 @@ while done:
                     screen.fill((0, 0, 0))
                     screen.blit(time, [0, 0])
                     screen.blit(monthday, [0, 50])
-                    blit_text(screen, "Listening...", (0, 200), fontbig,
+
+                    blit_text(screen, "Listening...", (0, 275), fontbig,
                               color=pygame.Color("white"))
                     pygame.display.flip()
                     pygame.display.update()
@@ -153,7 +186,8 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, str(first + second), (0, 200), fontbig,
+
+                blit_text(screen, str(first + second), (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -162,7 +196,8 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, str(first - second), (0, 200), fontbig,
+
+                blit_text(screen, str(first - second), (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -171,7 +206,8 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, str(first * second), (0, 200), fontbig,
+
+                blit_text(screen, str(first * second), (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -180,7 +216,8 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, str(first / second), (0, 200), fontbig,
+
+                blit_text(screen, str(first / second), (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -191,7 +228,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen, square_root, (0, 200), fontbig,
+
+            blit_text(screen, square_root, (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -203,7 +241,8 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, "No Word Found", (0, 200), fontbig,
+
+                blit_text(screen, "No Word Found", (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -212,11 +251,12 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, word + ' means "'+ english_word + '" in english', (0, 200), fontbig,
+
+                blit_text(screen, word + ' means "' + english_word + '" in english', (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
-                Voice.speak_flite(word + " means "+ english_word + " in english")
+                Voice.speak_flite(word + " means " + english_word + " in english")
         elif "what does" in response and "mean in Urdu" in response:
             word = response.split()[2]
             urdu_word = translate_english_to_urdu(word)
@@ -224,7 +264,8 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, "No Word Found", (0, 200), fontbig,
+
+                blit_text(screen, "No Word Found", (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -233,11 +274,12 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, word + ' means "'+ urdu_word + '" in urdu', (0, 200), fontbig,
+
+                blit_text(screen, word + ' means "' + urdu_word + '" in urdu', (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
-                Voice.speak_flite(word + " means "+ urdu_word + " in urdu")
+                Voice.speak_flite(word + " means " + urdu_word + " in urdu")
         elif "shutdown" in response:
             os.system("poweroff")
         elif "reboot" in response:
@@ -247,7 +289,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen,"Stopping Audio", (0, 200), fontbig,
+
+            blit_text(screen, "Stopping Audio", (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -257,7 +300,8 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(currentDT.strftime("%I:%M %p").replace('0', '', 1), "", (0, 200), fontbig,
+
+                blit_text(currentDT.strftime("%I:%M %p").replace('0', '', 1), "", (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -266,7 +310,8 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(currentDT.strftime("%I:%M %p"), "", (0, 200), fontbig,
+
+                blit_text(currentDT.strftime("%I:%M %p"), "", (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -275,7 +320,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(currentDT.strftime("%A, %B %Y").replace('0', '', 1), "", (0, 200), fontbig,
+
+            blit_text(currentDT.strftime("%A, %B %Y").replace('0', '', 1), "", (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -285,7 +331,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen,"Stopping Audio", (0, 200), fontbig,
+
+            blit_text(screen, "Stopping Audio", (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -295,7 +342,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen,vid_play, (0, 200), fontbig,
+
+            blit_text(screen, vid_play, (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -304,7 +352,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen,"Dom Is Now Exiting", (0, 200), fontbig,
+
+            blit_text(screen, "Dom Is Now Exiting", (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -315,7 +364,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen, info[0], (0, 200), fontbig,
+
+            blit_text(screen, info[0], (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -323,7 +373,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen, "You will need the following ingredients", (0, 200), fontbig,
+
+            blit_text(screen, "You will need the following ingredients", (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -332,16 +383,18 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, row, (0, 200), fontbig,
+
+                blit_text(screen, row, (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
-                Voice.speak_flite(row)   
+                Voice.speak_flite(row)
             for row in info[2]:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, row, (0, 200), fontbig,
+
+                blit_text(screen, row, (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -351,7 +404,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen, text, (0, 200), fontbig,
+
+            blit_text(screen, text, (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -362,7 +416,8 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen,read_news_headlines(news_number), (0, 200), fontbig,
+
+                blit_text(screen, read_news_headlines(news_number), (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -371,7 +426,8 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen,read_news_headlines(news_number), (0, 200), fontbig,
+
+                blit_text(screen, read_news_headlines(news_number), (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -381,7 +437,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen, random_joke[0], (0, 200), fontbig,
+
+            blit_text(screen, random_joke[0], (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -389,7 +446,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen, random_joke[1], (0, 200), fontbig,
+
+            blit_text(screen, random_joke[1], (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -401,7 +459,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen,"Say The Users Name You Want to Create", (0, 200), fontbig,
+
+            blit_text(screen, "Say The Users Name You Want to Create", (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -410,7 +469,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen, "Say The Users Age", (0, 200), fontbig,
+
+            blit_text(screen, "Say The Users Age", (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -419,7 +479,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen, "Say The Users Birthday", (0, 200), fontbig,
+
+            blit_text(screen, "Say The Users Birthday", (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -428,7 +489,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen,"Name, " + name + " Age, " + age + " Birthday, " + birthday, (0, 200), fontbig,
+
+            blit_text(screen, "Name, " + name + " Age, " + age + " Birthday, " + birthday, (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -436,7 +498,8 @@ while done:
             screen.fill((0, 0, 0))
             screen.blit(time, [0, 0])
             screen.blit(monthday, [0, 50])
-            blit_text(screen, "Are you sure you want to create this user", (0, 200), fontbig,
+
+            blit_text(screen, "Are you sure you want to create this user", (0, 275), fontbig,
                       color=pygame.Color("white"))
             pygame.display.flip()
             pygame.display.update()
@@ -447,7 +510,8 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, "Creating User", (0, 200), fontbig,
+
+                blit_text(screen, "Creating User", (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -465,7 +529,8 @@ while done:
                             screen.fill((0, 0, 0))
                             screen.blit(time, [0, 0])
                             screen.blit(monthday, [0, 50])
-                            blit_text(screen, "Hello There Zara, Welcome Back", (0, 200), fontbig,
+
+                            blit_text(screen, "Hello There Zara, Welcome Back", (0, 275), fontbig,
                                       color=pygame.Color("white"))
                             pygame.display.flip()
                             pygame.display.update()
@@ -474,7 +539,8 @@ while done:
                             screen.fill((0, 0, 0))
                             screen.blit(time, [0, 0])
                             screen.blit(monthday, [0, 50])
-                            blit_text(screen, "Hello There Ayaan, Welcome Back", (0, 200), fontbig,
+
+                            blit_text(screen, "Hello There Ayaan, Welcome Back", (0, 275), fontbig,
                                       color=pygame.Color("white"))
                             pygame.display.flip()
                             pygame.display.update()
@@ -483,7 +549,8 @@ while done:
                             screen.fill((0, 0, 0))
                             screen.blit(time, [0, 0])
                             screen.blit(monthday, [0, 50])
-                            blit_text(screen, "Hello There " + row[0] + ", Welcome Back", (0, 200), fontbig,
+
+                            blit_text(screen, "Hello There " + row[0] + ", Welcome Back", (0, 275), fontbig,
                                       color=pygame.Color("white"))
                             pygame.display.flip()
                             pygame.display.update()
@@ -493,7 +560,8 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, "Your Birthday Comes On" + Birthday, (0, 200), fontbig,
+
+                blit_text(screen, "Your Birthday Comes On" + Birthday, (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -502,7 +570,8 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, "Please Say Who You Are", (0, 200), fontbig,
+
+                blit_text(screen, "Please Say Who You Are", (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -512,7 +581,8 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, "Your Age is" + str(Age), (0, 200), fontbig,
+
+                blit_text(screen, "Your Age is" + str(Age), (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -521,7 +591,8 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, "Please Say Who You Are", (0, 200), fontbig,
+
+                blit_text(screen, "Please Say Who You Are", (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -532,7 +603,8 @@ while done:
                     screen.fill((0, 0, 0))
                     screen.blit(time, [0, 0])
                     screen.blit(monthday, [0, 50])
-                    blit_text(screen, "Your Name is Ayaan", (0, 200), fontbig,
+
+                    blit_text(screen, "Your Name is Ayaan", (0, 275), fontbig,
                               color=pygame.Color("white"))
                     pygame.display.flip()
                     pygame.display.update()
@@ -541,7 +613,8 @@ while done:
                     screen.fill((0, 0, 0))
                     screen.blit(time, [0, 0])
                     screen.blit(monthday, [0, 50])
-                    blit_text(screen, "Your Name is Zara", (0, 200), fontbig,
+
+                    blit_text(screen, "Your Name is Zara", (0, 275), fontbig,
                               color=pygame.Color("white"))
                     pygame.display.flip()
                     pygame.display.update()
@@ -550,16 +623,18 @@ while done:
                     screen.fill((0, 0, 0))
                     screen.blit(time, [0, 0])
                     screen.blit(monthday, [0, 50])
-                    blit_text(screen, "Your Name is "+ Name , (0, 200), fontbig,
+
+                    blit_text(screen, "Your Name is " + Name, (0, 275), fontbig,
                               color=pygame.Color("white"))
                     pygame.display.flip()
                     pygame.display.update()
-                    Voice.speak_flite("Your Name is "+ Name)
+                    Voice.speak_flite("Your Name is " + Name)
             else:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, "Please Say Who You Are", (0, 200), fontbig,
+
+                blit_text(screen, "Please Say Who You Are", (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
@@ -573,7 +648,8 @@ while done:
                     screen.fill((0, 0, 0))
                     screen.blit(time, [0, 0])
                     screen.blit(monthday, [0, 50])
-                    blit_text(screen, "Searching about " + " ".join(search.split()[2:]), (0, 200), fontbig,
+
+                    blit_text(screen, "Searching about " + " ".join(search.split()[2:]), (0, 275), fontbig,
                               color=pygame.Color("white"))
                     pygame.display.flip()
                     pygame.display.update()
@@ -582,8 +658,9 @@ while done:
                     screen.fill((0, 0, 0))
                     screen.blit(time, [0, 0])
                     screen.blit(monthday, [0, 50])
-                    blit_text(screen, search, (100,0), pygame.font.SysFont('Bebas Neue', 30),
-                              color=pygame.Color("white"))
+
+                    blit_text(screen, search, (0, 275), pygame.font.SysFont('Bebas Neue', 45),
+                              color=pygame.Color("green"))
                     pygame.display.flip()
                     pygame.display.update()
                     Voice.speak_flite(search)
@@ -591,9 +668,9 @@ while done:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
                 screen.blit(monthday, [0, 50])
-                blit_text(screen, check, (0, 200), fontbig,
+
+                blit_text(screen, check, (0, 275), fontbig,
                           color=pygame.Color("white"))
                 pygame.display.flip()
                 pygame.display.update()
                 Voice.speak_flite(check)
-

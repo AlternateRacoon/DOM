@@ -1,8 +1,10 @@
 import os
 import re
 import urllib.request
+
 from recognize import Recognize
 from speak import Voice
+
 
 def call_dom():
     Voice.speak_flite("dom is now going to sleep", "call again by saying dom")
@@ -15,6 +17,7 @@ def call_dom():
             Voice.speak_flite("Listening...")
             break
 
+
 def connect_media_center():
     Voice.speak_flite("Connected to media center", "please speak your commands")
     while True:
@@ -26,6 +29,7 @@ def connect_media_center():
             break
         else:
             media_center_control("media center " + response)
+
 
 def SearchMovie(movie_name):
     html_page = "http://www.emasti.pk/search?keyword=" + movie_name
