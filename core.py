@@ -86,11 +86,11 @@ net = tflearn.regression(net)
 model = tflearn.DNN(net)
 
 
-#model.load("model.tflearn")
+model.load("model.tflearn")
 
 
-model.fit(training, output, n_epoch=1000, batch_size=8, show_metric=True)
-model.save("model.tflearn")
+#model.fit(training, output, n_epoch=1000, batch_size=8, show_metric=True)
+#model.save("model.tflearn")
 
 def bag_of_words(s, words):
     bag = [0 for _ in range(len(words))]
@@ -113,8 +113,8 @@ def chat():
     Age = 0
     Birthday = ""
     while True:
-        #inp = Recognize.get_recognize_google()
-        inp = input("Input: ")
+        inp = Recognize.get_recognize_google()
+        #inp = input("Input: ")
         if not inp:
             pass
         else:
