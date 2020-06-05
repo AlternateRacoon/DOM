@@ -159,47 +159,23 @@ def search_google(search):
 
 
 def search_wikipedia(search):
-    if "who is" in search or "who was" in search or "who are" in search or "what is" in search or "what was" in search or "history of" in search:
-        search1 = search
-        search = search.split()[2:]
-        search = " ".join(search)
-
-        info = False
-        try:
-            info = wikipedia.summary(search, sentences=2)
-        except wikipedia.DisambiguationError as e:
-            s = random.choice(e.options)
-            info = wikipedia.summary(s, sentences=2)
-        except wikipedia.PageError as e:
-            google_search = search_google(search1)
-            if google_search:
-                return google_search
-            else:
-                return "Could not find any results about it"
-        if info:
-            return info.replace('"', '')
-    elif "tell me about" in search:
-        search1 = search
-        search = " ".join(search.split()[2:])
-        Voice.speak_flite("Searching about " + search)
-        info = False
-        try:
-            info = wikipedia.summary(search, sentences=2)
-        except wikipedia.DisambiguationError as e:
-            s = random.choice(e.options)
-            info = wikipedia.summary(s, sentences=2)
-        except wikipedia.PageError as e:
-            google_search = search_google(search1)
-            if google_search:
-                return google_search
-            else:
-                return "Could not find any results about it"
-        if info:
-            return info.replace('"', '')
-    elif "how" in search or "why" in search or "when" in search:
-        google_search = search_google(search)
+    search1 = search
+    search = search
+    info = False
+    try:
+        info = wikipedia.summary(search, sentences=2)
+    except wikipedia.DisambiguationError as e:
+        s = random.choice(e.options)
+        info = wikipedia.summary(s, sentences=2)
+    except wikipedia.PageError as e:
+        google_search = search_google(search1)
         if google_search:
             return google_search
+        else:
+            return "Could not find any results about it"
+    if info:
+        return info.replace('"', '')
+
 
 
 def get_recipe(recipe_name):
@@ -296,3 +272,4 @@ def pkr_to_usd(pkr):
     currency = float(html_data)
     price = currency * pkr
     return price
+

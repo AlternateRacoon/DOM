@@ -17,6 +17,7 @@ for row in unfiltered_greetings:
         greetings.append(greeting)
 
 greetings = greetings[:-7]
+print(greetings)
 for index in range(len(greetings)):
     for row in range(len(greetings[index])):
         greetings[index][row] = greetings[index][row].lower()
