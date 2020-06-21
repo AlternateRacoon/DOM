@@ -20,12 +20,15 @@ from search import search_wikipedia, read_news_headlines, joke, get_recipe, tran
 from speak import Voice
 from users import create_user, get_all_users
 from weather import get_weather
+
+
 with open("intents.json") as file:
     data = json.load(file)
 
 try:
     with open("data.pickle", "rb") as f:
         words, labels, training, output = pickle.load(f)
+
 except:
     words = []
     labels = []
@@ -38,7 +41,6 @@ except:
             words.extend(wrds)
             docs_x.append(wrds)
             docs_y.append(intent["tag"])
-
         if intent["tag"] not in labels:
             labels.append(intent["tag"])
 
@@ -54,47 +56,40 @@ except:
 
     for x, doc in enumerate(docs_x):
         bag = []
-
         wrds = [stemmer.stem(w.lower()) for w in doc]
-
         for w in words:
             if w in wrds:
                 bag.append(1)
             else:
                 bag.append(0)
-
         output_row = out_empty[:]
         output_row[labels.index(docs_y[x])] = 1
-
         training.append(bag)
         output.append(output_row)
-
     training = numpy.array(training)
     output = numpy.array(output)
-
     with open("data.pickle", "wb") as f:
         pickle.dump((words, labels, training, output), f)
 
 tensorflow.reset_default_graph()
 
 net = tflearn.input_data(shape=[None, len(training[0])])
+
 net = tflearn.fully_connected(net, 8)
 net = tflearn.fully_connected(net, 8)
 net = tflearn.fully_connected(net, len(output[0]), activation="softmax")
 net = tflearn.regression(net)
+net = tflearn.dropout(net, 0.8)
 
 model = tflearn.DNN(net)
 
-
 model.load("model.tflearn")
-
 
 #model.fit(training, output, n_epoch=1000, batch_size=8, show_metric=True)
 #model.save("model.tflearn")
 
 def bag_of_words(s, words):
     bag = [0 for _ in range(len(words))]
-
     s_words = nltk.word_tokenize(s)
     s_words = [stemmer.stem(word.lower()) for word in s_words]
 
@@ -106,15 +101,14 @@ def bag_of_words(s, words):
     return numpy.array(bag)
 
 
-
 def chat():
     news_number = 1
     Name = ""
     Age = 0
     Birthday = ""
     while True:
-        inp = Recognize.get_recognize_google()
-        #inp = input("Input: ")
+        #inp = Recognize.get_recognize_google()
+        inp = input("Input: ")
         if not inp:
             pass
         else:
@@ -138,8 +132,8 @@ def chat():
                         inp = inp.replace("video", "", 1)
                     if "audio" in inp.lower():
                         inp = inp.replace("audio", "", 1)
-                    inp = inp.replace(" ","")
-                    Voice.speak_flite("Playing Audio - "+ inp)
+                    inp = inp.replace(" ", "")
+                    Voice.speak_flite("Playing Audio - " + inp)
                     play_video(inp.lower())
                 elif "sleep" == responses[0]:
                     call_dom()
@@ -161,18 +155,18 @@ def chat():
                         Voice.speak_flite(str(number))
                 elif "spelling" == responses[0]:
                     if "what" in inp:
-                        inp = inp.replace("what","")
+                        inp = inp.replace("what", "")
                     if "is" in inp:
-                        inp = inp.replace("is","")
+                        inp = inp.replace("is", "")
                     if "does" in inp:
-                        inp = inp.replace("does","")
+                        inp = inp.replace("does", "")
                     if "of" in inp:
-                        inp = inp.replace("of","")
+                        inp = inp.replace("of", "")
                     if "spelling" in inp:
-                        inp = inp.replace("spelling","")
+                        inp = inp.replace("spelling", "")
                     if "spell" in inp:
-                        inp = inp.replace("spell","")
-                    inp = inp.replace(" ","")
+                        inp = inp.replace("spell", "")
+                    inp = inp.replace(" ", "")
                     word = " ".join(inp)
                     for row in range(len(word)):
                         Voice.speak_flite(word[row])
@@ -194,20 +188,20 @@ def chat():
                             Voice.speak_flite(str(first * second))
                 elif "translate" == responses[0]:
                     if "translate" in inp:
-                        inp = inp.replace("translate","")
+                        inp = inp.replace("translate", "")
                     if "to" in inp:
-                        inp = inp.replace("to","")
+                        inp = inp.replace("to", "")
                     if "what" in inp:
-                        inp = inp.replace("what","")
+                        inp = inp.replace("what", "")
                     if "does" in inp:
-                        inp = inp.replace("does","")
+                        inp = inp.replace("does", "")
                     if "english" in inp.lower():
-                        inp = inp.replace("english","")
-                        inp = inp.replace(" ","")
+                        inp = inp.replace("english", "")
+                        inp = inp.replace(" ", "")
                         Voice.speak_flite(translate_urdu_to_english(inp))
                     elif "urdu" in inp.lower():
-                        inp = inp.replace("urdu","")
-                        inp = inp.replace(" ","")
+                        inp = inp.replace("urdu", "")
+                        inp = inp.replace(" ", "")
                         Voice.speak_flite(translate_english_to_urdu(inp))
                 elif "system" == responses[0]:
                     if "shutdown" in inp or "poweroff" in inp:
@@ -227,12 +221,14 @@ def chat():
                     break
                 elif "recipe" == responses[0]:
                     if "recipe" in inp:
-                        inp = inp.replace("recipe","")
+                        inp = inp.replace("recipe", "")
                     elif "for" in inp:
-                        inp = inp.replace("for","")
+                        inp = inp.replace("for", "")
                     elif "of" in inp:
-                        inp = inp.replace("of","")
-                    inp = inp.replace("give","").replace("me","").replace(" a ","").replace("tell", "").replace("me","").replace("about","")
+                        inp = inp.replace("of", "")
+                    inp = inp.replace("give", "").replace("me", "").replace(" a ", "").replace("tell", "").replace("me",
+                                                                                                                   "").replace(
+                        "about", "")
                     info = get_recipe(inp)
                     Voice.speak_flite(info[0])
                     Voice.speak_flite("You will need the following ingredients")
@@ -240,7 +236,8 @@ def chat():
                         Voice.speak_flite(row)
                     for row in info[2]:
                         Voice.speak_flite(row)
-                elif "weather" == responses[0] and "i can play songs, tell the weather, tell a joke" not in responses[0]:
+                elif "weather" == responses[0] and "i can play songs, tell the weather, tell a joke" not in responses[
+                    0]:
                     text = get_weather()
                     Voice.speak_flite(text)
                 elif "news" == responses[0]:
@@ -346,4 +343,6 @@ def chat():
                     Voice.speak_flite(random.choice(responses))
             else:
                 Voice.speak_flite("I do not Understand Please Retry")
+
+
 chat()
