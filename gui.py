@@ -505,7 +505,6 @@ while done:
             pygame.display.update()
             Voice.speak_flite("Are you sure you want to create this user")
             response = Recognize.get_recognize_google()
-            print(response)
             if "yes" in response:
                 screen.fill((0, 0, 0))
                 screen.blit(time, [0, 0])
