@@ -12,10 +12,8 @@ from speak import Voice
 
 def play_video(video_name):
     query_string = urllib.parse.urlencode({"search_query": video_name})
-    print(query_string)
     html_content = urllib.request.urlopen("http://www.youtube.com/results?" + query_string)
     search_results = re.findall(r'},"watchEndpoint":{"videoId":"(.*?)"}},"', html_content.read().decode("utf8"))
-    print(search_results)
     url = "https://www.youtube.com/watch?v=" + search_results[0]
     video = pafy.new(url)
     best = video.audiostreams[0]
@@ -82,4 +80,3 @@ def play_song(song_name):
                     Voice.speak_flite("Saving The File")
                     os.system("cd /Dietpi && wget '" + mp3_link + "'")
                     break
-play_video("despacito")

@@ -107,8 +107,8 @@ def chat():
     Age = 0
     Birthday = ""
     while True:
-        #inp = Recognize.get_recognize_google()
-        inp = input("Input: ")
+        inp = Recognize.get_recognize_google()
+        #inp = input("Input: ")
         if not inp:
             pass
         else:
@@ -141,6 +141,7 @@ def chat():
                     us_string_place = 0
                     pkr_string_place = 0
                     for row in range(len(inp.split())):
+                        inp = inp.lower()
                         inp = inp.lower()
                         if inp.split()[row] == "us":
                             us_string_place += row
@@ -263,7 +264,6 @@ def chat():
                     Voice.speak_flite("Name, " + name + " Age, " + age + " Birthday, " + birthday)
                     Voice.speak_flite("Are you sure you want to create this user")
                     response = Recognize.get_recognize_google()
-                    print(response)
                     if "yes" in response:
                         Voice.speak_flite("Creating User")
                         create_user(name, age, birthday)
